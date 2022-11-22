@@ -1,0 +1,5 @@
+%syntax-version=1.0.0
+%project=ecommerce
+
+structure 2022-11-22T10:45:02Z Marie-Lou Le Jan <marielou.lejan@gmail.com> # ecommerce database structure
+seeding 2022-11-22T10:45:18Z Marie-Lou Le Jan <marielou.lejan@gmail.com> # seeding test
