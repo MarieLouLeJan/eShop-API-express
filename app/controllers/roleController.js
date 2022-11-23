@@ -1,31 +1,27 @@
-import roleQuery from '../queries/roleQuery.js';
+import { Role } from '../database/models/index.js';
 
 export default {
 
     async getAll (req, res) {
-        const roles = await roleQuery.getAllRoles();
-        res.json({ roles });
+        const roles = await Role.findAll();
+        res.status(200).send({ roles });
     },
 
     async getOne(req, res){
-        const role = await roleQuery.getRoleById(req.params.id);
-        res.json({ role })
+        const role = await await Role.findByPk(req.params.id);
+        res.status(200).send({ role });
     },
 
     async createOne(req, res){
-        const { body } = req;
-        const newRole = await roleQuery.createRole(body);
-        res.json({ newRole });
+        const newRole = await Role.create(req.body)
+        res.status(201).send({ newRole });
     },
 
     async updateOne(req, res){
-        const { body } = req;
-        const role = await roleQuery.updateRole(req.params.id, body);
-        res.json({ role });
+        const role = await Role.findByPk(req.params.id);
+        if(!role) return res.status(200).send('roleNotFound');
+        await role.update(req.body);
+        res.status(201).send({ role });
     },
 
-    async unactiveOne(req, res){
-        const role = await roleQuery.unactiveRole(req.params.id);
-        res.json({ role })
-    },
 }

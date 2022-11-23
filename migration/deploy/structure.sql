@@ -50,7 +50,6 @@ CREATE TABLE "categories" (
     "id"                INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     "title"             TEXT NOT NULL UNIQUE,
     "active"            BOOLEAN NOT NULL DEFAULT true,
-    "created_by"        INTEGER NOT NULL REFERENCES users("id"),
     "created_at"        TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
@@ -60,7 +59,6 @@ CREATE TABLE "tva" (
     "title"             TEXT NOT NULL UNIQUE,
     "value"             FLOAT NOT NULL,
     "active"            BOOLEAN NOT NULL DEFAULT true,
-    "created_by"        INTEGER NOT NULL REFERENCES users("id"),
     "created_at"        TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
@@ -77,7 +75,6 @@ CREATE TABLE "products" (
     "note"              FLOAT,
     "category_id"       INTEGER NOT NULL REFERENCES categories("id"),
     "tva_id"            INTEGER NOT NULL REFERENCES tva("id"),
-    "created_by"        INTEGER NOT NULL REFERENCES users("id"),
     "created_at"        TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
@@ -108,7 +105,7 @@ CREATE TABLE "orders" (
 
 
 CREATE TABLE "order_type_adress" (
-    "order_id"         INTEGER NOT NULL REFERENCES orders("id"),
+    "order_id"          INTEGER NOT NULL REFERENCES orders("id"),
     "adress_id"         INTEGER NOT NULL REFERENCES adresses("id"),
     "adress_type_id"    INTEGER NOT NULL REFERENCES adress_types("id")
 );

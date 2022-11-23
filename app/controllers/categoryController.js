@@ -1,31 +1,34 @@
-import categoryQuery from '../queries/categoryQuery.js';
+import { Category, Product } from '../database/models/index.js';
 
 export default {
 
     async getAll (req, res) {
-        const categories = await categoryQuery.getAllCategories();
-        res.json({ categories });
+        const categories = await Category.findAll();
+        res.status(200).send({ categories });
     },
 
     async getOne(req, res){
-        const category = await categoryQuery.getCategoryById(req.params.id);
-        res.json({ category })
+        const category = await await Category.findByPk(req.params.id);
+        const products = await await Product.findAll({
+            where: { category_id: req.params.id },
+            include: [
+                'tva',
+                'categories'
+            ]
+        });
+        res.status(200).json({ category, products })
     },
 
     async createOne(req, res){
-        const { body } = req;
-        const newCategory = await categoryQuery.createCategory(body);
-        res.json({ newCategory });
+        const newCategory = await Category.create(req.body)
+        res.status(201).send({ newCategory });
     },
 
     async updateOne(req, res){
-        const { body } = req;
-        const category = await categoryQuery.updateCategory(req.params.id, body);
-        res.json({ category });
+        const category = await Category.findByPk(req.params.id);
+        if(!category) return res.status(200).send('categoryNotFound');
+        await category.update(req.body);
+        res.status(201).send({ category });
     },
 
-    async unactiveOne(req, res){
-        const category = await categoryQuery.unactiveCategory(req.params.id);
-        res.json({ category })
-    },
 }

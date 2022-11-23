@@ -1,16 +1,14 @@
-import orderProductQuery from '../queries/orderProductQuery.js';
+import { Order_product } from '../database/models/index.js';
 
 export default {
 
     async getAll (req, res) {
-        const orderProducts = await orderProductQuery.getAllOrderProducts();
-        res.json({ orderProducts });
+        const orderProducts = await Order_product.findAll();
+        res.status(200).send({ orderProducts });
     },
 
     async createOne(req, res){
-        const { body } = req;
-        const newOrderProduct = await orderProductQuery.createOrderProduct(body);
-        res.json({ newOrderProduct });
+        const newOrderProduct = await Order_product.create(req.body)
+        res.status(201).send({ newOrderProduct });
     },
-
 }

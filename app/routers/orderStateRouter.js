@@ -12,9 +12,11 @@ import validate from '../services/validations/validate.js';
 import { orderStateChanged, orderStateCreated } from '../services/validations/schemas/orderState.js'
 
 orderStateRouter.get('/getAll', CW(controller.getAll));
+
 orderStateRouter.get('/getOne/:id', param, CW(controller.getOne));
+
 orderStateRouter.post('/createOne', validate(orderStateCreated, 'body'), CW(controller.createOne));
+
 orderStateRouter.put('/updateOne/:id', param, bodyMaker, validate(orderStateChanged, 'body'), CW(controller.updateOne));
-orderStateRouter.delete('/deleteOne/:id', CW(controller.unactiveOne));
 
 export default orderStateRouter;

@@ -1,32 +1,28 @@
-import TVAQuery from '../queries/TVAQuery.js';
+import { TVA } from '../database/models/index.js';
 
 export default {
 
     async getAll (req, res) {
-        const TVAs = await TVAQuery.getAllTVA();
-        res.json({ TVAs });
+        const TVAs = await TVA.findAll();
+        res.status(200).send({ TVAs });
     },
 
     async getOne(req, res){
-        console.log("ICI");
-        const TVA = await TVAQuery.getTVAById(req.params.id);
-        res.json({ TVA })
+        const TVA = await TVA.findByPk(req.params.id);
+        res.status(200).send({ TVA });
     },
 
     async createOne(req, res){
-        const { body } = req;
-        const newTVA = await TVAQuery.createTVA(body);
-        res.json({ newTVA });
+        const newTVA = await TVA.create(req.body);
+        res.status(201).send({ newTVA });
     },
 
     async updateOne(req, res){
-        const { body } = req;
-        const TVA = await TVAQuery.updateTVA(req.params.id, body);
-        res.json({ TVA });
+        const TVA = await TVA.findByPk(req.paramsid);
+        if(!TVA) return res.status(200).send('TVANotFound');
+
+        await TVA.update(req.body)
+        res.status(201).send({ TVA });
     },
 
-    async unactiveOne(req, res){
-        const TVA = await TVAQuery.unactiveTVA(req.params.id);
-        res.json({ TVA })
-    },
 }

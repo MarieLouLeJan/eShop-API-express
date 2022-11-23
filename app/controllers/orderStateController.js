@@ -1,31 +1,27 @@
-import orderStateQuery from '../queries/orderStateQuery.js';
+import { OrderState } from '../database/models/index.js';
 
 export default {
 
     async getAll (req, res) {
-        const orderStates = await orderStateQuery.getAllOrderStates();
-        res.json({ orderStates });
+        const orderStates = await OrderState.findAll();
+        res.status(200).send({ orderStates });
     },
 
     async getOne(req, res){
-        const orderState = await orderStateQuery.getOrderStateById(req.params.id);
-        res.json({ orderState })
+        const orderState = await await OrderState.findByPk(req.params.id);
+        res.status(200).send({ orderState });
     },
 
     async createOne(req, res){
-        const { body } = req;
-        const newOrderState = await orderStateQuery.createOrderState(body);
-        res.json({ newOrderState });
+        const newOrderState = await OrderState.create(req.body);
+        res.status(201).send({ newOrderState });
     },
 
     async updateOne(req, res){
-        const { body } = req;
-        const orderState = await orderStateQuery.updateOrderState(req.params.id, body);
-        res.json({ orderState });
+        const orderState = await OrderState.findByPk(req.params.id);
+        if(!orderState) return res.status(200).send('orderStateNotFound');
+        await orderState.update(req.body);
+        res.status(201).send({ orderState });
     },
 
-    async unactiveOne(req, res){
-        await orderStateQuery.unactiveOrderState(req.params.id);
-        res.json()
-    },
 }

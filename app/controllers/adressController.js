@@ -1,31 +1,27 @@
-import adressQuery from '../queries/adressQuery.js';
+import { Adress } from '../database/models/index.js';
+
 
 export default {
 
     async getAll (req, res) {
-        const adresses = await adressQuery.getAllAdresses();
-        res.json({ adresses });
+        const adresses = await Adress.findAll();
+        res.status(200).send({ adresses });
     },
 
     async getOne(req, res){
-        const adress = await adressQuery.getAdressById(req.params.id);
-        res.json({ adress })
+        const adress = await Adress.findByPk(req.params.id);
+        res.status(200).json({ adress })
     },
 
     async createOne(req, res){
-        const { body } = req;
-        const newAdress = await adressQuery.createAdress(body);
-        res.json({ newAdress });
+        const newAdress = await Adress.create(req.body)
+        res.status(201).send({ newAdress });
     },
 
     async updateOne(req, res){
-        const { body } = req;
-        const adress = await adressQuery.updateAdress(req.params.id, body);
-        res.json({ adress });
-    },
-
-    async unactiveOne(req, res){
-        const adress = await adressQuery.unactiveAdress(req.params.id);
-        res.json({ adress })
+        const adress = await Adress.findByPk(req.params.id);
+        if(!adress) return res.status(200).send('adressNotFound');
+        await adress.update(req.body);
+        res.status(201).send({ adress });
     },
 }

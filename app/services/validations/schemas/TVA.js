@@ -2,13 +2,12 @@ import Joi from 'joi';
 
 const titlePattern = /^([1-9]|[1-9][0-9])%$/;
 
-const TVA = {
+const TVASchema = {
     title: Joi.string().pattern(titlePattern).min(2),
     value: Joi.number().required(),
-    active: Joi.boolean(),
-    created_by: Joi.number().min(1)
+    active: Joi.boolean()
 };
 
-export const TVAChanged = Joi.object(TVA);
+export const TVAChanged = Joi.object(TVASchema);
 
-export const TVACreated = Joi.object(TVA).fork(Object.keys(TVA), (schema) => schema.required());
+export const TVACreated = Joi.object(TVASchema).fork(['title', 'value'], (schema) => schema.required());

@@ -12,9 +12,15 @@ import validate from '../services/validations/validate.js';
 import { orderChanged, orderCreated } from '../services/validations/schemas/order.js'
 
 orderRouter.get('/getAll', CW(controller.getAll));
+
 orderRouter.get('/getOne/:id', param, CW(controller.getOne));
+
+orderRouter.get('/getByUserId/:id', param, CW(controller.getByUSer));
+
 orderRouter.post('/createOne', validate(orderCreated, 'body'), CW(controller.createOne));
+
 orderRouter.put('/updateOne/:id', param, bodyMaker, validate(orderChanged, 'body'), CW(controller.updateOne));
-orderRouter.delete('/deleteOne/:id', CW(controller.deleteOne));
+
+orderRouter.delete('/deleteOne/:id', param, CW(controller.deleteOne));
 
 export default orderRouter;

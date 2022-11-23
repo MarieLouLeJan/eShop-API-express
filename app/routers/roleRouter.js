@@ -12,9 +12,11 @@ import validate from '../services/validations/validate.js';
 import { roleCreated, roleChanged } from '../services/validations/schemas/role.js'
 
 roleRouter.get('/getAll', CW(controller.getAll));
+
 roleRouter.get('/getOne/:id', param, CW(controller.getOne));
+
 roleRouter.post('/createOne', validate(roleCreated, 'body'), CW(controller.createOne));
+
 roleRouter.put('/updateOne/:id', param, bodyMaker, validate(roleChanged, 'body'), CW(controller.updateOne));
-roleRouter.delete('/deleteOne/:id', CW(controller.unactiveOne));
 
 export default roleRouter;

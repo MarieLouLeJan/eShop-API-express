@@ -9,4 +9,4 @@ const orderTypeAdressSchema =  {
 
 export const orderTypeAdressChanged = Joi.object(orderTypeAdressSchema);
 
-export const orderTypeAdressCreated = Joi.object(orderTypeAdressSchema).fork(Object.keys(orderTypeAdressSchema), (schema) => schema.required());
+export const orderTypeAdressComplete = Joi.object(orderTypeAdressSchema).fork(Object.keys(orderTypeAdressSchema), (schema) => schema.required());

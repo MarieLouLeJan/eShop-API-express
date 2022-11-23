@@ -71,39 +71,6 @@ Adress.belongsTo(User, {
     as: 'users',
 });
 
-
-User.hasMany(Category, {
-    foreignKey: 'created_by',
-    as: 'categories'
-});
-
-Category.belongsTo(User, {
-    foreignKey: 'created_by',
-    as: 'users'
-});
-
-User.hasMany(TVA, {
-    foreignKey: 'created_by',
-    as: 'tva'
-});
-
-TVA.belongsTo(User, {
-    foreignKey: 'created_by',
-    as: 'users'
-});
-
-
-User.hasMany(Product, {
-    foreignKey: 'created_by',
-    as: 'products'
-});
-
-Product.belongsTo(User, {
-    foreignKey: 'created_by',
-    as: 'users'
-});
-
-
 Category.hasMany(Product, {
     foreignKey: 'category_id',
     as: 'products'
@@ -176,6 +143,16 @@ Product_review.belongsTo(User, {
     foreignKey: 'user_id',
     // as: 'users'
 });
+
+Order_type_adress.belongsTo(Adress, {
+    foreignKey: 'adress_id',
+    // as: 'adresses'
+});
+
+Adress.hasMany(Order_type_adress, {
+    foreignKey: 'adress_id',
+    // as: 'order_type_adress'
+})
 
 
 /************ MANY TO MANY *************/

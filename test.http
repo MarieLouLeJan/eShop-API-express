@@ -2,27 +2,76 @@
 
 
 ### POST 
-POST http://localhost:8888/roles/createOne
+POST http://localhost:8888/orders/createOne
 Content-Type: application/json
 
 {
-    "title": "autre role"
+    "totalHT": 2012,
+    "tax": 212.20,
+    "totalTTC": 23212.20,
+    "quantity": 5,
+    "user_id": 1,
+    "order_states_id": 1
+}
+
+###
+POST http://localhost:8888/orderProduct/createOne
+Content-Type: application/json
+
+{
+    "product_id": 1,
+    "order_id": 1,
+    "quantity": 2,
+    "priceHT": 125,
+    "TVA": "17%"
+}
+
+###
+POST http://localhost:8888/orderTypeAdress/createOne
+Content-Type: application/json
+
+{
+    "adress_id": 1,
+    "order_id": 1,
+    "adress_type_id": 2
 }
 
 
-### GET all 
-GET http://localhost:8888/roles/getAll
 
-### GET one 
-GET http://localhost:8888/roles/getOne/1
-
-### PUT 
-PUT http://localhost:8888/roles/updateOne/2
+###
+PUT http://localhost:8888/adresses/updateOne/1
 Content-Type: application/json
 
 {
-    "title": "agahaha"
+    "entitled": "coucou"
+}
+
+### GET all
+GET http://localhost:8888/adresses/getOne/2
+
+###
+POST http://localhost:8888/adresses/createOne
+Content-Type: application/json
+
+{
+    "entitled": "marie-lou",
+    "number": 1,
+    "street": "rue de la rue",
+    "postal_code": 75000,
+    "city": "paris",
+    "country": "france",
+    "user_id": 1
+}
+
+### PUT 
+POST http://localhost:8888/orderTypeAdress/createOne
+Content-Type: application/json
+
+{
+    "order_id": 1,
+    "adress_id": 1,
+    "adress_type_id": 2
 }
 
 ### DELETE 
-DELETE http://localhost:8888/roles/deleteOne/1
+DELETE http://localhost:8888/orders/deleteOne/2
