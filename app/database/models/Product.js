@@ -33,10 +33,6 @@ const Product = sequelize.define('products',
             type: DataTypes.BOOLEAN,
             allowNull: false,
             defaultValue: true,
-        },
-        note: {
-            type: DataTypes.NUMBER,
-            allowNull: true
         }
     },
     {
