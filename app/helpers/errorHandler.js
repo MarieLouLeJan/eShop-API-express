@@ -1,5 +1,7 @@
+import logger from "./logger.js";
+
 // eslint-disable-next-line no-unused-vars
-export default (displayType) => (err, _, res, next) => {
+export default (err, _, res, next) => {
 
     let status = 500;
 
@@ -13,17 +15,17 @@ export default (displayType) => (err, _, res, next) => {
     }
 
     if (err.isJoi) {
-        status = 500;
+        status = 400;
         message = err.message
     }
 
     if (err.name === 'SequelizeUniqueConstraintError') {
-        status = 500;
+        status = 400;
         message = err.parent.detail
     }
 
     if (err.name === 'SequelizeForeignKeyConstraintError') {
-        status = 500;
+        status = 400;
         message = err.parent.detail
     }
 
@@ -32,9 +34,10 @@ export default (displayType) => (err, _, res, next) => {
         message = err.message
     }
 
-    if (displayType === 'json') {
-        res.status(status).json({ error: message });
-    } else {
-        res.status(status).render('error', { title: `Error status ${status}`, content: message });
+    if(status === 500){
+        message = 'Internal Server Error, please try again later...';
+        logger.error(err)
     }
+
+    res.status(status).send({ error: message });
 };

@@ -37,7 +37,7 @@ router.use((_, __, next) => {
     next(new NotFoundError('Resource not found'));
 });
 
-router.use(errorHandler('json'));
+router.use(errorHandler);
 
 
 export default router;
