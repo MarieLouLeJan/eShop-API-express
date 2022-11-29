@@ -1,1 +1,116 @@
+### POST
+
+POST http://localhost:8888/orders/createOne
+Content-Type: application/json
+
+{
+    "totalHT": 12120.01,
+    "totalTTC": 1258984.20,
+    "tax": 125.02,
+    "quantity": 5,
+    "user_id": 1,
+    "order_states_id": 1
+}
+
+### POST
+
+POST http://localhost:8888/orderProduct/createOne
+Content-Type: application/json
+
+{
+    "product_id": 1,
+    "order_id": 4,
+    "quantity": 5,
+    "priceHT": 12.30,
+    "TVA": "20%"
+}
+
+
+
+###
+POST http://localhost:8888/orderProduct/createOne
+Content-Type: application/json
+
+{
+    "product_id": 2,
+    "order_id": 4,
+    "quantity": 2,
+    "priceHT": 1253.02,
+    "TVA": "20%"
+}
+
+
+###
+POST http://localhost:8888/adresses/createOne
+Content-Type: application/json
+
+{
+    "entitled": "Marie-lou",
+    "number": 4,
+    "street": "rue de la rue",
+    "postal_code": 12550,
+    "city": "Villiers",
+    "country": "Villiers",
+    "user_id": 1
+}
+
+###
+
+POST http://localhost:8888/orderTypeAdress/createOne
+Content-Type: application/json
+
+{
+    "order_id": 4,
+    "adress_id": 3,
+    "adress_type_id": 1
+}
+
+
+###
+
+DELETE http://localhost:8888/adressTypes/deleteOne/2
+
+###
+
+DELETE http://localhost:8888/adresses/deleteOne/3
+
+### 
+POST http://localhost:8888/adressTypes/createOne
+Content-Type: application/json
+
+{
+    "title": "test"
+}
+
+###
+GET http://localhost:8888/categories/getAll
+
+###
+POST http://localhost:8888/categories/createOne
+Content-Type: application/json
+
+{
+    "title": "Phone"
+}
+
+### 
+DELETE http://localhost:8888/orderTypeAdress/deleteOne
+Content-Type: application/json
+
+{
+    "order_id": 4,
+    "adress_id": 3,
+    "adress_type_id": 1
+}
+
+
+### 
+POST http://localhost:8888/orderTypeAdress/createOne
+Content-Type: application/json
+
+{
+    "order_id": 4,
+    "adress_id": 3,
+    "adress_type_id": 1
+}
 

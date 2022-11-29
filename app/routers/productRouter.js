@@ -19,4 +19,7 @@ productRouter.post('/createOne', validate(productCreated, 'body'), CW(controller
 
 productRouter.put('/updateOne/:id', param, bodyMaker, validate(productChanged, 'body'), CW(controller.updateOne));
 
+productRouter.delete('/deleteOne/:id', param, CW(controller.deleteOne));
+
+
 export default productRouter;

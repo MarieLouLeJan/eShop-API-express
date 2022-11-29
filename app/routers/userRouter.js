@@ -13,12 +13,15 @@ import { userChanged, userCreated } from '../services/validations/schemas/user.j
 
 userRouter.get('/getAll', CW(controller.getAll));
 
-userRouter.get('/getOneById/:id', param, CW(controller.getOne));
+userRouter.get('/getOne/:id', param, CW(controller.getOne));
 
 userRouter.post('/login', CW(controller.login));
 
 userRouter.post('/createOne', validate(userCreated, 'body'), CW(controller.createOne));
 
 userRouter.put('/updateOne/:id', param, bodyMaker, validate(userChanged, 'body'), CW(controller.updateOne));
+
+userRouter.delete('/deleteOne/:id', param, CW(controller.deleteOne));
+
 
 export default userRouter;

@@ -3,10 +3,10 @@ import Joi from 'joi';
 const TVAPattern = /^([1-9]|[1-9][0-9])%$/;
 
 const orderProductSchema =  {
-    product_id: Joi.number().min(1),
-    order_id: Joi.number().min(1),
-    quantity: Joi.number().min(1),
-    priceHT: Joi.number(),
+    product_id: Joi.number().greater(0),
+    order_id: Joi.number().greater(0),
+    quantity: Joi.number().greater(0),
+    priceHT: Joi.number().greater(0),
     TVA: Joi.string().pattern(TVAPattern).min(2)
 };
 

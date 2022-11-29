@@ -1,22 +1,28 @@
 import { Category, Product } from '../database/models/index.js';
+import NotFoundError from '../helpers/NotFoundError.js';
 
 export default {
 
-    async getAll (req, res) {
-        const categories = await Category.findAll();
+    async getAll (_, res, next) {
+        const categories = await Category.findAll({
+            include: {
+                model: Product, as: 'products',
+                include: [ 'tva', 'categories', 'product_reviews' ]
+            }
+        });
+        if(categories.length === 0) next(new NotFoundError('Non existent data'))
         res.status(200).send({ categories });
     },
 
-    async getOne(req, res){
-        const category = await await Category.findByPk(req.params.id);
-        const products = await await Product.findAll({
-            where: { category_id: req.params.id },
-            include: [
-                'tva',
-                'categories'
-            ]
+    async getOne(req, res, next){
+        const category = await Category.findByPk(req.params.id, {
+            include: {
+                model: Product, as: 'products',
+                include: [ 'tva', 'categories', 'product_reviews' ]
+            }
         });
-        res.status(200).json({ category, products })
+        if(!category) next(new NotFoundError('Non existent data'))
+        res.status(200).json({ category })
     },
 
     async createOne(req, res){
@@ -24,11 +30,18 @@ export default {
         res.status(201).send({ newCategory });
     },
 
-    async updateOne(req, res){
+    async updateOne(req, res, next){
         const category = await Category.findByPk(req.params.id);
-        if(!category) return res.status(200).send('categoryNotFound');
+        if(!category) next(new NotFoundError('Non existent data'))
         await category.update(req.body);
         res.status(201).send({ category });
     },
+
+    async deleteOne(req, res, next){
+        const category = await Category.findByPk(req.params.id);
+        if(!category) next(new NotFoundError('Non existent data'))
+        await category.destroy();
+        res.status(204).send();
+    }
 
 }

@@ -2,9 +2,9 @@ import Joi from 'joi';
 
 
 const orderTypeAdressSchema =  {
-    order_id: Joi.number().min(1).required(),
-    adress_id: Joi.number().min(1).required(),
-    adress_type_id: Joi.number().min(1).required(),
+    order_id: Joi.number().greater(0),
+    adress_id: Joi.number().greater(0),
+    adress_type_id: Joi.number().greater(0),
 };
 
 export const orderTypeAdressChanged = Joi.object(orderTypeAdressSchema);

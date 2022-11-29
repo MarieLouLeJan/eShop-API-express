@@ -11,7 +11,7 @@ const userSchema = {
     email: Joi.string().email().min(4),
     password: Joi.string().pattern(passwordPattern),
     active: Joi.boolean(),
-    role_id: Joi.number().min(1)
+    role_id: Joi.number().greater(0)
 };
 
 export const userChanged = Joi.object(userSchema);

@@ -1,22 +1,22 @@
-import { Product, Product_review } from '../database/models/index.js';
+import { Product } from '../database/models/index.js';
+import NotFoundError from '../helpers/NotFoundError.js';
 
 export default {
 
-    async getAll (req, res) {
+    async getAll (req, res, next) {
         const products = await Product.findAll({
-            include: [ 'tva', 'categories' ]
+            include: [ 'tva', 'categories', 'product_reviews' ]
         });
+        if(products.length === 0) next(new NotFoundError('Non existent data'))
         res.status(200).send({ products });
     },
 
-    async getOne(req, res){
+    async getOne(req, res, next){
         const product = await Product.findByPk(req.params.id, {
-            include: [ 'tva', 'categories' ]
+            include: [ 'tva', 'categories', 'product_reviews' ]
         });
-        const reviews = await Product_review.findAll({
-            where: { product_id: req.params.id}
-        })
-        res.status(200).send({ product, reviews });
+        if(!product) next(new NotFoundError('Non existent data'))
+        res.status(200).send({ product });
     },
 
     async createOne(req, res){
@@ -24,10 +24,17 @@ export default {
         res.status(201).send({ newProduct });
     },
 
-    async updateOne(req, res){
+    async updateOne(req, res, next){
         const product = await Product.findByPk(req.params.id);
-        if(!product) return res.status(200).send('productNotFound');
+        if(!product) next(new NotFoundError('Non existent data'))
         await product.update(req.body)
         res.status(201).send({ product });
     },
+
+    async deleteOne(req, res, next){
+        const product = await Product.findByPk(req.params.id);
+        if(!product) next(new NotFoundError('Non existent data'))
+        await product.destroy();
+        res.status(204).send();
+    }
 }

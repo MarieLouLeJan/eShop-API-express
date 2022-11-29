@@ -19,4 +19,7 @@ adressTypeRouter.post('/createOne', validate(adressTypeCreated, 'body'), CW(cont
 
 adressTypeRouter.put('/updateOne/:id', bodyMaker, param, validate(adressTypeChanged, 'body'), CW(controller.updateOne));
 
+adressTypeRouter.delete('/deleteOne/:id', param, CW(controller.deleteOne));
+
+
 export default adressTypeRouter;

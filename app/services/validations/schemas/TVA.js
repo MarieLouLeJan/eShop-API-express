@@ -4,7 +4,7 @@ const titlePattern = /^([1-9]|[1-9][0-9])%$/;
 
 const TVASchema = {
     title: Joi.string().pattern(titlePattern).min(2),
-    value: Joi.number().required(),
+    value: Joi.number(),
     active: Joi.boolean()
 };
 

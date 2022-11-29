@@ -19,4 +19,6 @@ TVARouter.post('/createOne', validate(TVACreated, 'body'), CW(controller.createO
 
 TVARouter.put('/updateOne/:id', param, bodyMaker, validate(TVAChanged, 'body'), CW(controller.updateOne));
 
+TVARouter.delete('/deleteOne/:id', param, CW(controller.deleteOne));
+
 export default TVARouter;

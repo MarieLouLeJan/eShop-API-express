@@ -39,12 +39,12 @@ Order_type_adress.belongsTo(Adress, {
 
 AdressType.hasMany(Order_type_adress, {
     foreignKey: 'adress_type_id',
-    // as: 'order_type_adress'
+    as: 'order_type_adress'
 });
 
 Order_type_adress.belongsTo(AdressType, {
     foreignKey: 'adress_type_id',
-    // as: 'adress_types'
+    as: 'adress_types'
 });
 
 

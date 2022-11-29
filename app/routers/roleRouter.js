@@ -19,4 +19,6 @@ roleRouter.post('/createOne', validate(roleCreated, 'body'), CW(controller.creat
 
 roleRouter.put('/updateOne/:id', param, bodyMaker, validate(roleChanged, 'body'), CW(controller.updateOne));
 
+roleRouter.delete('/deleteOne/:id', param, CW(controller.deleteOne));
+
 export default roleRouter;

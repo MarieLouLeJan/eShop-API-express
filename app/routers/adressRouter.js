@@ -15,8 +15,12 @@ adressRouter.get('/getAll', CW(controller.getAll));
 
 adressRouter.get('/getOne/:id', param, CW(controller.getOne));
 
+adressRouter.get('/getByUser/:id', param, CW(controller.getByUser))
+
 adressRouter.post('/createOne', validate(adressCreated, 'body'), CW(controller.createOne));
 
 adressRouter.put('/updateOne/:id', param, bodyMaker, validate(adressChanged, 'body'), CW(controller.updateOne));
+
+adressRouter.delete('/deleteOne/:id', param, CW(controller.deleteOne));
 
 export default adressRouter;

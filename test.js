@@ -1,5 +1,3 @@
-import * as url from 'url';
-const dirname = url.fileURLToPath(new URL('.', import.meta.url));
+const myArray = [];
 
-
-console.log(`${dirname}../../logs/error.log`)
+if(myArray.length === 0) console.log('non')

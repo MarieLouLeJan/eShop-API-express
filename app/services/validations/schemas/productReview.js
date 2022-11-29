@@ -3,9 +3,9 @@ import Joi from 'joi';
 const frenchPattern = /^[a-zA-Z0-9Ã-ÿ '"°-]+$/;
 
 const productReviewSchema = {
-    product_id: Joi.number().min(1),
-    user_id: Joi.number().min(1),
-    note: Joi.number(),
+    product_id: Joi.number().greater(0),
+    user_id: Joi.number().greater(0),
+    note: Joi.number().greater(0).less(6),
     content: Joi.string().pattern(frenchPattern).min(20)
 };
 

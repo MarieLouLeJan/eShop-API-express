@@ -19,4 +19,7 @@ orderStateRouter.post('/createOne', validate(orderStateCreated, 'body'), CW(cont
 
 orderStateRouter.put('/updateOne/:id', param, bodyMaker, validate(orderStateChanged, 'body'), CW(controller.updateOne));
 
+orderStateRouter.delete('/deleteOne/:id', param, CW(controller.deleteOne));
+
+
 export default orderStateRouter;
