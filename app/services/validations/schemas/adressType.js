@@ -7,6 +7,6 @@ const adressTypeSchema = {
     active: Joi.boolean()
 };
 
-export const adressTypeChanged = Joi.object(adressTypeSchema);
+export const adressTypePart = Joi.object(adressTypeSchema);
 
-export const adressTypeCreated = Joi.object(adressTypeSchema).fork(['title'], (schema) => schema.required())
+export const adressTypeComp = Joi.object(adressTypeSchema).fork(['title'], (schema) => schema.required())

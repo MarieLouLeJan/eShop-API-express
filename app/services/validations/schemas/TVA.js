@@ -8,6 +8,6 @@ const TVASchema = {
     active: Joi.boolean()
 };
 
-export const TVAChanged = Joi.object(TVASchema);
+export const TVAPart = Joi.object(TVASchema);
 
-export const TVACreated = Joi.object(TVASchema).fork(['title', 'value'], (schema) => schema.required());
+export const TVAComp = Joi.object(TVASchema).fork(['title', 'value'], (schema) => schema.required());

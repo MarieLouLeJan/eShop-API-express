@@ -82,6 +82,8 @@
  *                          type: array
  *                          items:  
  *                              $ref: '#/components/schemas/GetAdresses'
+ *          500:
+ *              description: Some servor error
  */
 
 
@@ -110,6 +112,8 @@
  *              description: The parameter must be type number
  *          404:
  *              description: The data was not found
+ *          500:
+ *              description: Some servor error
  */
 
 /**
@@ -139,6 +143,8 @@
  *              description: The parameter must be type number
  *          404:
  *              description: The data was not found
+ *          500:
+ *              description: Some servor error
  */
 
 /**
@@ -154,7 +160,7 @@
  *                  schema:
  *                      $ref: '#/components/schemas/Adresses'
  *      responses:
- *          200:
+ *          201:
  *              description: The adress was successfully created
  *              content:
  *                  application/json:
@@ -166,8 +172,46 @@
 
 /**
  * @swagger
- * /adresses/updateOne/{id}:
+ * /adresses/updateOnePut/{id}:
  *  put:
+ *      summary: update a adress by the id
+ *      tags: [Adresses]
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          schema:
+ *            type: number
+ *          required: true
+ *          description: The adress's id
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/Adresses'
+ *      responses:
+ *          200:
+ *              description: The adress was updated
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/Adresses'        
+ *          201:
+ *              description: A new adress was created
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/Adresses' 
+ *          404:
+ *              description: The data was not found
+ *          500:
+ *              description: Some servor error
+ */
+
+/**
+ * @swagger
+ * /adresses/updateOnePatch/{id}:
+ *  patch:
  *      summary: update a adress by the id
  *      tags: [Adresses]
  *      parameters:

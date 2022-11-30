@@ -117,7 +117,8 @@ CREATE TABLE "order_product" (
     "order_id"          INTEGER NOT NULL REFERENCES orders("id"),
     "quantity"          INTEGER NOT NULL,
     "priceHT"           FLOAT NOT NULL,
-    "TVA"               TEXT NOT NULL
+    "TVA_title"         TEXT NOT NULL,
+    "TVA_value"         FLOAT NOT NULL
 );
 
 

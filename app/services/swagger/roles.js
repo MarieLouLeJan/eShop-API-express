@@ -32,6 +32,8 @@
  *                          type: array
  *                          items:  
  *                              $ref: '#/components/schemas/Roles'
+ *          500:
+ *              description: Some servor error
  */
 
 
@@ -60,6 +62,8 @@
  *              description: The parameter must be type number
  *          404:
  *              description: The data was not found
+ *          500:
+ *              description: Some servor error
  */
 
 /**
@@ -75,7 +79,7 @@
  *                  schema:
  *                      $ref: '#/components/schemas/Roles'
  *      responses:
- *          200:
+ *          201:
  *              description: The role was successfully created
  *              content:
  *                  application/json:
@@ -87,7 +91,7 @@
 
 /**
  * @swagger
- * /roles/updateOne/{id}:
+ * /roles/updateOnePut/{id}:
  *  put:
  *      summary: update a category by the id
  *      tags: [Roles]
@@ -110,7 +114,45 @@
  *              content:
  *                  application/json:
  *                      schema:
- *                          $ref: '#/components/schemas/Roles'        
+ *                          $ref: '#/components/schemas/Roles' 
+ *          201:
+ *              description: A new role was created
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/Roles'       
+ *          404:
+ *              description: The data was not found
+ *          500:
+ *              description: Some servor error
+ */
+
+/**
+ * @swagger
+ * /roles/updateOnePatch/{id}:
+ *  patch:
+ *      summary: update a category by the id
+ *      tags: [Roles]
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          schema:
+ *            type: number
+ *          required: true
+ *          description: The role's id
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/Roles'
+ *      responses:
+ *          200:
+ *              description: The role was updated
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/Roles'     
  *          404:
  *              description: The data was not found
  *          500:

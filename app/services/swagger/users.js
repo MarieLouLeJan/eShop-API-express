@@ -34,8 +34,6 @@
  *           type: string
  *         email:
  *           type: string
- *         password:
- *           type: string
  *         role_id:
  *           type: number
  *         roles:
@@ -65,6 +63,8 @@
  *                          type: array
  *                          items:  
  *                              $ref: '#/components/schemas/GetUsers'
+ *          500:
+ *              description: Some servor error
  */
 
 
@@ -88,11 +88,45 @@
  *                  application/json:
  *                      schema:
  *                          $ref: '#/components/schemas/GetUsers'
-
  *          400:
  *              description: The parameter must be type number
  *          404:
  *              description: The data was not found
+ *          500:
+ *              description: Some servor error
+ */
+
+/**
+ * @swagger
+ * /users/login:
+ *  post:
+ *      summary: Return the list of all the users
+ *      tags: [Users]
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      required:
+ *                        - email
+ *                        - password
+ *                      properties:
+ *                        email:
+ *                          type: string
+ *                        password:
+ *                          type: string   
+ *      responses:
+ *          200:
+ *              description: The list of the users
+ *              content: 
+ *                  application/json:
+ *                      schema:
+ *                          type: array
+ *                          items:  
+ *                              $ref: '#/components/schemas/GetUsers'
+ *          500:
+ *              description: Some servor error
  */
 
 /**
@@ -108,7 +142,7 @@
  *                  schema:
  *                      $ref: '#/components/schemas/Users'
  *      responses:
- *          200:
+ *          201:
  *              description: The user was successfully created
  *              content:
  *                  application/json:
@@ -120,9 +154,9 @@
 
 /**
  * @swagger
- * /users/updateOne/{id}:
+ * /users/updateOnePut/{id}:
  *  put:
- *      summary: update a category by the id
+ *      summary: update a user by the id
  *      tags: [Users]
  *      parameters:
  *        - in: path
@@ -143,6 +177,12 @@
  *              content:
  *                  application/json:
  *                      schema:
+ *                          $ref: '#/components/schemas/Users'  
+ *          201:
+ *              description: A new user was created
+ *              content:
+ *                  application/json:
+ *                      schema:
  *                          $ref: '#/components/schemas/Users'        
  *          404:
  *              description: The data was not found
@@ -150,6 +190,58 @@
  *              description: Some servor error
  */
 
+/**
+ * @swagger
+ * /users/updateOnePatch/{id}:
+ *  patch:
+ *      summary: update a user by the id
+ *      tags: [Users]
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          schema:
+ *            type: number
+ *          required: true
+ *          description: The user's id
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/Users'
+ *      responses:
+ *          200:
+ *              description: The user was updated
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/Users'     
+ *          404:
+ *              description: The data was not found
+ *          500:
+ *              description: Some servor error
+ */
 
+/**
+ * @swagger
+ * /users/deleteOne/{id}:
+ *  delete:
+ *      summary: delete a user type by the id
+ *      tags: [User]
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          schema:
+ *            type: number
+ *          required: true
+ *          description: The user's id
+ *      responses:
+ *          204:
+ *              description: The data was deleted      
+ *          404:
+ *              description: The data was not found
+ *          500:
+ *              description: Some servor error
+ */
 
 

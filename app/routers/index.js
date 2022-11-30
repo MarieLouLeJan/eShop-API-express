@@ -2,8 +2,6 @@ import express from 'express';
 
 const router = express.Router();
 
-import Cache from '../helpers/routeCache.js'
-
 import categoryRouter from './categoryRouter.js'
 import productRouter from './productRouter.js'
 import TVARouter from './TVARouter.js'

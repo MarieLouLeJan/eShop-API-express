@@ -9,7 +9,8 @@
  *         - order_id
  *         - quantity
  *         - priceHT
- *         - TVA
+ *         - TVA_value
+ *         - TVA_title 
  *       properties:
  *         product_id:
  *           type: number   
@@ -19,8 +20,10 @@
  *           type: number 
  *         priceHT:
  *           type: number 
- *         TVA:
+ *         TVA_title:
  *           type: string    
+ *         TVA_value:
+ *           type: number   
  *     GetOrderProduct:
  *       type: object
  *       properties:
@@ -34,8 +37,10 @@
  *           type: number 
  *         priceHT:
  *           type: number 
- *         TVA:
+ *         TVA_title:
  *           type: string
+ *         TVA_value:
+ *           type: number   
  */
 
 /**
@@ -77,6 +82,10 @@
  *                          type: array
  *                          items:  
  *                              $ref: '#/components/schemas/GetOrderProduct'
+ *          400:
+ *              description: The parameter must be type number
+ *          404:
+ *              description: The data was not found
  */
 
 

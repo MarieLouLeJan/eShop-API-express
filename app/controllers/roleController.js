@@ -20,11 +20,25 @@ export default {
         res.status(201).send({ newRole });
     },
 
-    async updateOne(req, res, next){
+    async updateOnePatch(req, res, next){
         const role = await Role.findByPk(req.params.id);
         if(!role) next(new NotFoundError('Non existent data'))
         await role.update(req.body);
         res.status(201).send({ role });
+    },
+
+    async updateOnePut(req, res){
+        const role = await Role.findByPk(req.params.id);
+        if(!role) {
+            const newRole = await Role.create(req.body);
+            res.status(201).send({ newRole });
+        } else {
+            const ro = role.get({plain: true})
+            for(const i in ro) if(i !== "created_at" && i !== 'id' ) delete (ro[i]); 
+            const roleToSave = Object.assign({}, ro, req.body)
+            await role.update(roleToSave);
+            res.status(201).send({ role });
+        }
     },
 
     async deleteOne(req, res, next){

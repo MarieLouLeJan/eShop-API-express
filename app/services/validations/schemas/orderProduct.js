@@ -7,7 +7,8 @@ const orderProductSchema =  {
     order_id: Joi.number().greater(0),
     quantity: Joi.number().greater(0),
     priceHT: Joi.number().greater(0),
-    TVA: Joi.string().pattern(TVAPattern).min(2)
+    TVA_title: Joi.string().pattern(TVAPattern).min(2),
+    TVA_value: Joi.number()
 };
 
 export const orderProductChanged = Joi.object(orderProductSchema);

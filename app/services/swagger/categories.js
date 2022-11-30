@@ -49,6 +49,8 @@
  *                          type: array
  *                          items:  
  *                              $ref: '#/components/schemas/GetCategories'
+ *          500:
+ *              description: Some servor error
  */
 
 
@@ -72,11 +74,12 @@
  *                  application/json:
  *                      schema:
  *                          $ref: '#/components/schemas/GetCategories'
-
  *          400:
  *              description: The parameter must be type number
  *          404:
  *              description: The data was not found
+ *          500:
+ *              description: Some servor error
  */
 
 /**
@@ -92,7 +95,7 @@
  *                  schema:
  *                      $ref: '#/components/schemas/Categories'
  *      responses:
- *          200:
+ *          201:
  *              description: The category was successfully created
  *              content:
  *                  application/json:
@@ -104,7 +107,7 @@
 
 /**
  * @swagger
- * /categories/updateOne/{id}:
+ * /categories/updateOnePut/{id}:
  *  put:
  *      summary: update a category by the id
  *      tags: [Categories]
@@ -127,7 +130,13 @@
  *              content:
  *                  application/json:
  *                      schema:
- *                          $ref: '#/components/schemas/Categories'        
+ *                          $ref: '#/components/schemas/Categories' 
+ *          201:
+ *              description: The new category was created
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/Categories'          
  *          404:
  *              description: The data was not found
  *          500:

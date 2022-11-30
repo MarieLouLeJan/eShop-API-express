@@ -107,6 +107,8 @@
  *              description: The parameter must be type number
  *          404:
  *              description: The data was not found
+ *          500:
+ *              description: Some servor error
  */
 
 /**
@@ -134,6 +136,8 @@
  *              description: The parameter must be type number
  *          404:
  *              description: The data was not found
+ *          500:
+ *              description: Some servor error
  */
 
 /**
@@ -149,7 +153,7 @@
  *                  schema:
  *                      $ref: '#/components/schemas/Orders'
  *      responses:
- *          200:
+ *          201:
  *              description: The order was successfully created
  *              content:
  *                  application/json:
@@ -161,7 +165,7 @@
 
 /**
  * @swagger
- * /orders/updateOne/{id}:
+ * /orders/updateOnePut/{id}:
  *  put:
  *      summary: update a category by the id
  *      tags: [Orders]
@@ -184,7 +188,45 @@
  *              content:
  *                  application/json:
  *                      schema:
- *                          $ref: '#/components/schemas/Orders'        
+ *                          $ref: '#/components/schemas/Orders'       
+ *          201:
+ *              description: A new order was created
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/Orders'  
+ *          404:
+ *              description: The data was not found
+ *          500:
+ *              description: Some servor error
+ */
+
+/**
+ * @swagger
+ * /orders/updateOnePatch/{id}:
+ *  patch:
+ *      summary: update a category by the id
+ *      tags: [Orders]
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          schema:
+ *            type: number
+ *          required: true
+ *          description: The order's id
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/Orders'
+ *      responses:
+ *          200:
+ *              description: The order was updated
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/Orders' 
  *          404:
  *              description: The data was not found
  *          500:

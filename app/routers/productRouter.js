@@ -9,15 +9,17 @@ import param from '../helpers/paramsIsNumber.js'
 import bodyMaker from '../helpers/bodyMaker.js'
 
 import validate from '../services/validations/validate.js';
-import { productChanged, productCreated } from '../services/validations/schemas/product.js'
+import { productComp, productPart } from '../services/validations/schemas/product.js'
 
 productRouter.get('/getAll', CW(controller.getAll));
 
 productRouter.get('/getOne/:id', param, CW(controller.getOne));
 
-productRouter.post('/createOne', validate(productCreated, 'body'), CW(controller.createOne));
+productRouter.post('/createOne', validate(productComp, 'body'), CW(controller.createOne));
 
-productRouter.put('/updateOne/:id', param, bodyMaker, validate(productChanged, 'body'), CW(controller.updateOne));
+productRouter.put('/updateOnePut/:id', param, bodyMaker, validate(productComp, 'body'), CW(controller.updateOnePut));
+
+productRouter.patch('/updateOnePatch/:id', param, bodyMaker, validate(productPart, 'body'), CW(controller.updateOnePatch));
 
 productRouter.delete('/deleteOne/:id', param, CW(controller.deleteOne));
 

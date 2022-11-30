@@ -30,11 +30,25 @@ export default {
         res.status(201).send({ newCategory });
     },
 
-    async updateOne(req, res, next){
+    async updateOnePatch(req, res, next){
         const category = await Category.findByPk(req.params.id);
         if(!category) next(new NotFoundError('Non existent data'))
         await category.update(req.body);
         res.status(201).send({ category });
+    },
+
+    async updateOnePut(req, res){
+        const category = await Category.findByPk(req.params.id);
+        if(!category) {
+            const newCategory = await Category.create(req.body);
+            res.status(201).send({ newCategory });
+        } else {
+            const cat = category.get({plain: true})
+            for(const i in cat) if(i !== "created_at" && i !== 'id' ) delete (cat[i]); 
+            const categoryToSave = Object.assign({}, cat, req.body)
+            await category.update(categoryToSave);
+            res.status(201).send({ category });
+        }
     },
 
     async deleteOne(req, res, next){

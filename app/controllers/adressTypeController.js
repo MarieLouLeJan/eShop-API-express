@@ -20,11 +20,25 @@ export default {
         res.status(201).send({ newAdressType });
     },
 
-    async updateOne(req, res, next){
+    async updateOnePut(req, res){
+        const adressType = await AdressType.findByPk(req.params.id);
+        if(!adressType) {
+            const newAdressType = await AdressType.create(req.body);
+            res.status(201).send({ newAdressType });
+        } else {
+            const AT = adressType.get({plain: true})
+            for(const i in AT) if(i !== "created_at" && i !== 'id' ) delete (AT[i]); 
+            const adressTypeToSave = Object.assign({}, AT, req.body)
+            await adressType.update(adressTypeToSave);
+            res.status(200).send({ adressType });
+        }
+    },
+
+    async updateOnePatch(req, res, next){
         const adressType = await AdressType.findByPk(req.params.id);
         if(!adressType) next(new NotFoundError('Non existent data'))
         await adressType.update(req.body);
-        res.status(201).send({ adressType });
+        res.status(200).send({ adressType });
     },
     
     async deleteOne(req, res, next){

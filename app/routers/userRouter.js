@@ -9,17 +9,19 @@ import param from '../helpers/paramsIsNumber.js'
 import bodyMaker from '../helpers/bodyMaker.js'
 
 import validate from '../services/validations/validate.js';
-import { userChanged, userCreated } from '../services/validations/schemas/user.js'
+import { userPart, userComp } from '../services/validations/schemas/user.js'
 
 userRouter.get('/getAll', CW(controller.getAll));
 
 userRouter.get('/getOne/:id', param, CW(controller.getOne));
 
-userRouter.post('/login', CW(controller.login));
+userRouter.post('/login', validate(userPart), CW(controller.login));
 
-userRouter.post('/createOne', validate(userCreated, 'body'), CW(controller.createOne));
+userRouter.post('/createOne', validate(userComp, 'body'), CW(controller.createOne));
 
-userRouter.put('/updateOne/:id', param, bodyMaker, validate(userChanged, 'body'), CW(controller.updateOne));
+userRouter.put('/updateOnePut/:id', param, bodyMaker, validate(userComp, 'body'), CW(controller.updateOnePut));
+
+userRouter.patch('/updateOnePatch/:id', param, bodyMaker, validate(userPart, 'body'), CW(controller.updateOnePatch));
 
 userRouter.delete('/deleteOne/:id', param, CW(controller.deleteOne));
 

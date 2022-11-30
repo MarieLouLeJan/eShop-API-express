@@ -20,11 +20,25 @@ export default {
         res.status(201).send({ newOrderState });
     },
 
-    async updateOne(req, res, next){
+    async updateOnePatch(req, res, next){
         const orderState = await OrderState.findByPk(req.params.id);
         if(!orderState) next(new NotFoundError('Non existent data'))
         await orderState.update(req.body);
         res.status(201).send({ orderState });
+    },
+
+    async updateOnePut(req, res){
+        const orderState = await OrderState.findByPk(req.params.id);
+        if(!orderState) {
+            const newOrderState = await OrderState.create(req.body);
+            res.status(201).send({ newOrderState });
+        } else {
+            const OS = orderState.get({plain: true})
+            for(const i in OS) if(i !== "created_at" && i !== 'id' ) delete (OS[i]); 
+            const orderStateToSave = Object.assign({}, OS, req.body)
+            await orderState.update(orderStateToSave);
+            res.status(201).send({ orderState });
+        }
     },
 
     async deleteOne(req, res, next){

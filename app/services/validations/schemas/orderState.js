@@ -7,6 +7,6 @@ const orderStateSchema = {
     active: Joi.boolean()
 };
 
-export const orderStateChanged = Joi.object(orderStateSchema);
+export const orderStatePart = Joi.object(orderStateSchema);
 
-export const orderStateCreated = Joi.object(orderStateSchema).fork(['title'], (schema) => schema.required())
+export const orderStateComp = Joi.object(orderStateSchema).fork(['title'], (schema) => schema.required())

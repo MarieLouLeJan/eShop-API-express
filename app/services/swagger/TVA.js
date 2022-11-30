@@ -36,6 +36,8 @@
  *                          type: array
  *                          items:  
  *                              $ref: '#/components/schemas/TVA'
+ *          500:
+ *              description: Some servor error
  */
 
 
@@ -64,6 +66,8 @@
  *              description: The parameter must be type number
  *          404:
  *              description: The data was not found
+ *          500:
+ *              description: Some servor error
  */
 
 /**
@@ -79,7 +83,7 @@
  *                  schema:
  *                      $ref: '#/components/schemas/TVA'
  *      responses:
- *          200:
+ *          201:
  *              description: The TVA was successfully created
  *              content:
  *                  application/json:
@@ -91,7 +95,7 @@
 
 /**
  * @swagger
- * /TVA/updateOne/{id}:
+ * /TVA/updateOnePut/{id}:
  *  put:
  *      summary: update a TVA by the id
  *      tags: [TVA]
@@ -114,7 +118,45 @@
  *              content:
  *                  application/json:
  *                      schema:
- *                          $ref: '#/components/schemas/TVA'        
+ *                          $ref: '#/components/schemas/TVA' 
+ *          201:
+ *              description: A new was created
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/TVA'       
+ *          404:
+ *              description: The data was not found
+ *          500:
+ *              description: Some servor error
+ */
+
+/**
+ * @swagger
+ * /TVA/updateOnePatch/{id}:
+ *  patch:
+ *      summary: update a TVA by the id
+ *      tags: [TVA]
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          schema:
+ *            type: number
+ *          required: true
+ *          description: The TVA's id
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/TVA'
+ *      responses:
+ *          200:
+ *              description: The TVA was updated
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/TVA' 
  *          404:
  *              description: The data was not found
  *          500:

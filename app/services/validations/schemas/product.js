@@ -15,6 +15,6 @@ const productSchema = {
     tva_id: Joi.number().greater(0)
 };
 
-export const productChanged = Joi.object(productSchema);
+export const productPart = Joi.object(productSchema);
 
-export const productCreated = Joi.object(productSchema).fork(['ref', 'title', 'description', 'image', 'priceHT', 'stock', 'category_id', 'tva_id'], (schema) => schema.required())
+export const productComp = Joi.object(productSchema).fork(['ref', 'title', 'description', 'image', 'priceHT', 'stock', 'category_id', 'tva_id'], (schema) => schema.required())

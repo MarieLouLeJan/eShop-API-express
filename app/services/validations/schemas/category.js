@@ -7,6 +7,6 @@ const categorySchema = {
     active: Joi.boolean()
 }
 
-export const categoryChanged = Joi.object(categorySchema);
+export const categoryPart = Joi.object(categorySchema);
 
-export const categoryCreated = Joi.object(categorySchema).fork(['title'], (schema) => schema.required())
+export const categoryComp = Joi.object(categorySchema).fork(['title'], (schema) => schema.required())

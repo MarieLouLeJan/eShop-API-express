@@ -15,6 +15,6 @@ const adressSchema = {
     user_id: Joi.number().greater(0)
 }
 
-export const adressChanged = Joi.object(adressSchema);
+export const adressPart = Joi.object(adressSchema);
 
-export const adressCreated = Joi.object(adressSchema).fork(['entitled', 'number', 'street', 'postal_code', 'city', 'country'], (schema) => schema.required())
+export const adressComp = Joi.object(adressSchema).fork(['entitled', 'number', 'street', 'postal_code', 'city', 'country'], (schema) => schema.required())

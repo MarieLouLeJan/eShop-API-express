@@ -20,7 +20,12 @@ const Order_product = sequelize.define('order_product',
             type: DataTypes.STRING,
             allowNull: false,
         },
-        TVA: {
+        TVA_title: {
+            type: DataTypes.NUMBER,
+            allowNull: false,
+            unique: true,
+        },
+        TVA_value: {
             type: DataTypes.NUMBER,
             allowNull: false,
             unique: true,

@@ -9,6 +9,6 @@ const orderSchema = {
     order_states_id: Joi.number().greater(0),
 };
 
-export const orderChanged = Joi.object(orderSchema);
+export const orderPart = Joi.object(orderSchema);
 
-export const orderCreated = Joi.object(orderSchema).fork(Object.keys(orderSchema), (schema) => schema.required())
+export const orderComp = Joi.object(orderSchema).fork(Object.keys(orderSchema), (schema) => schema.required())

@@ -110,11 +110,12 @@
  *                  application/json:
  *                      schema:
  *                          $ref: '#/components/schemas/GetProducts'
-
  *          400:
  *              description: The parameter must be type number
  *          404:
  *              description: The data was not found
+ *          500:
+ *              description: Some servor error
  */
 
 /**
@@ -130,7 +131,7 @@
  *                  schema:
  *                      $ref: '#/components/schemas/Products'
  *      responses:
- *          200:
+ *          201:
  *              description: The product was successfully created
  *              content:
  *                  application/json:
@@ -142,9 +143,9 @@
 
 /**
  * @swagger
- * /products/updateOne/{id}:
+ * /products/updateOnePut/{id}:
  *  put:
- *      summary: update a category by the id
+ *      summary: update a product by the id
  *      tags: [Products]
  *      parameters:
  *        - in: path
@@ -165,7 +166,45 @@
  *              content:
  *                  application/json:
  *                      schema:
- *                          $ref: '#/components/schemas/Products'        
+ *                          $ref: '#/components/schemas/Products' 
+ *          201:
+ *              description: A new product was created
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/Products'       
+ *          404:
+ *              description: The data was not found
+ *          500:
+ *              description: Some servor error
+ */
+
+/**
+ * @swagger
+ * /products/updateOnePatch/{id}:
+ *  patch:
+ *      summary: update a product by the id
+ *      tags: [Products]
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          schema:
+ *            type: number
+ *          required: true
+ *          description: The product's id
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/Products'
+ *      responses:
+ *          200:
+ *              description: The product was updated
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/Products'      
  *          404:
  *              description: The data was not found
  *          500:

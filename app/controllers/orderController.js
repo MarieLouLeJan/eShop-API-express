@@ -42,11 +42,25 @@ export default {
         res.status(201).send({ newOrder });
     },
 
-    async updateOne(req, res, next){
+    async updateOnePatch(req, res, next){
         const order = await Order.findByPk(req.params.id);
         if(!order) next(new NotFoundError('Non existent data'))
         await order.update(req.body);
         res.status(201).send({ order });
+    },
+
+    async updateOnePut(req, res){
+        const order = await Order.findByPk(req.params.id);
+        if(!order) {
+            const newOrder = await Order.create(req.body);
+            res.status(201).send({ newOrder });
+        } else {
+            const ord = order.get({plain: true})
+            for(const i in ord) if(i !== "created_at" && i !== 'id' ) delete (ord[i]); 
+            const orderToSave = Object.assign({}, ord, req.body)
+            await order.update(orderToSave);
+            res.status(201).send({ order });
+        }
     },
 
     async deleteOne(req, res, next){

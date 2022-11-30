@@ -9,15 +9,17 @@ import param from '../helpers/paramsIsNumber.js'
 import bodyMaker from '../helpers/bodyMaker.js'
 
 import validate from '../services/validations/validate.js';
-import { adressTypeChanged, adressTypeCreated } from '../services/validations/schemas/adressType.js'
+import { adressTypeComp, adressTypePart } from '../services/validations/schemas/adressType.js'
 
 adressTypeRouter.get('/getAll', CW(controller.getAll));
 
 adressTypeRouter.get('/getOne/:id', param, CW(controller.getOne));
 
-adressTypeRouter.post('/createOne', validate(adressTypeCreated, 'body'), CW(controller.createOne));
+adressTypeRouter.post('/createOne', validate(adressTypeComp, 'body'), CW(controller.createOne));
 
-adressTypeRouter.put('/updateOne/:id', bodyMaker, param, validate(adressTypeChanged, 'body'), CW(controller.updateOne));
+adressTypeRouter.put('/updateOnePut/:id', bodyMaker, param, validate(adressTypeComp, 'body'), CW(controller.updateOnePut));
+
+adressTypeRouter.patch('/updateOnePatch/:id', bodyMaker, param, validate(adressTypePart, 'body'), CW(controller.updateOnePatch));
 
 adressTypeRouter.delete('/deleteOne/:id', param, CW(controller.deleteOne));
 

@@ -32,6 +32,8 @@
  *                          type: array
  *                          items:  
  *                              $ref: '#/components/schemas/OrderStates'
+ *          500:
+ *              description: Some servor error
  */
 
 
@@ -60,6 +62,8 @@
  *              description: The parameter must be type number
  *          404:
  *              description: The data was not found
+ *          500:
+ *              description: Some servor error
  */
 
 /**
@@ -75,7 +79,7 @@
  *                  schema:
  *                      $ref: '#/components/schemas/Orderstates'
  *      responses:
- *          200:
+ *          201:
  *              description: The orderState was successfully created
  *              content:
  *                  application/json:
@@ -87,7 +91,39 @@
 
 /**
  * @swagger
- * /orderStates/updateOne/{id}:
+ * /orderStates/updateOnePatch/{id}:
+ *  patch:
+ *      summary: update a category by the id
+ *      tags: [Orderstates]
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          schema:
+ *            type: number
+ *          required: true
+ *          description: The orderState's id
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/Orderstates'
+ *      responses:
+ *          200:
+ *              description: The orderState was updated
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/Orderstates'        
+ *          404:
+ *              description: The data was not found
+ *          500:
+ *              description: Some servor error
+ */
+
+/**
+ * @swagger
+ * /orderStates/updateOnePut/{id}:
  *  put:
  *      summary: update a category by the id
  *      tags: [Orderstates]
@@ -107,6 +143,12 @@
  *      responses:
  *          200:
  *              description: The orderState was updated
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/Orderstates'   
+ *          201:
+ *              description: A new orderState was created
  *              content:
  *                  application/json:
  *                      schema:

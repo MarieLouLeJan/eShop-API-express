@@ -8,6 +8,6 @@ const roleSchema = {
     active: Joi.boolean()
 };
 
-export const roleChanged = Joi.object(roleSchema);
+export const rolePart = Joi.object(roleSchema);
 
-export const roleCreated = Joi.object(roleSchema).fork(['title'], (schema) => schema.required())
+export const roleComp = Joi.object(roleSchema).fork(['title'], (schema) => schema.required())
