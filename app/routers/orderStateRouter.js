@@ -10,18 +10,20 @@ import bodyMaker from '../helpers/bodyMaker.js'
 
 import validate from '../services/validations/validate.js';
 import { orderStatePart, orderStateComp } from '../services/validations/schemas/orderState.js'
+import auth from '../services/middlewares/auth.js';
+import authAdmin from '../services/middlewares/authAdmin.js';
 
-orderStateRouter.get('/getAll', CW(controller.getAll));
+orderStateRouter.get('/getAll', auth, authAdmin, CW(controller.getAll));
 
-orderStateRouter.get('/getOne/:id', param, CW(controller.getOne));
+orderStateRouter.get('/getOne/:id', param, auth, authAdmin, CW(controller.getOne));
 
-orderStateRouter.post('/createOne', validate(orderStateComp, 'body'), CW(controller.createOne));
+orderStateRouter.post('/createOne', auth, authAdmin, validate(orderStateComp, 'body'), CW(controller.createOne));
 
-orderStateRouter.put('/updateOnePut/:id', param, bodyMaker, validate(orderStateComp, 'body'), CW(controller.updateOnePut));
+orderStateRouter.put('/updateOnePut/:id', param, bodyMaker, auth, authAdmin, validate(orderStateComp, 'body'), CW(controller.updateOnePut));
 
-orderStateRouter.patch('/updateOnePatch/:id', param, bodyMaker, validate(orderStatePart, 'body'), CW(controller.updateOnePatch));
+orderStateRouter.patch('/updateOnePatch/:id', param, bodyMaker, auth, authAdmin, validate(orderStatePart, 'body'), CW(controller.updateOnePatch));
 
-orderStateRouter.delete('/deleteOne/:id', param, CW(controller.deleteOne));
+orderStateRouter.delete('/deleteOne/:id', param, auth, authAdmin, CW(controller.deleteOne));
 
 
 export default orderStateRouter;

@@ -1,61 +1,64 @@
-import { Category, Product } from '../database/models/index.js';
+import query from '../services/queries/categoryQueries.js';
 import NotFoundError from '../helpers/NotFoundError.js';
 
 export default {
 
-    async getAll (_, res, next) {
-        const categories = await Category.findAll({
-            include: {
-                model: Product, as: 'products',
-                include: [ 'tva', 'categories', 'product_reviews' ]
-            }
-        });
+    async getAllAdmin (_, res, next) {
+        const categories = await query.getAllAdmin();
         if(categories.length === 0) next(new NotFoundError('Non existent data'))
         res.status(200).send({ categories });
     },
 
-    async getOne(req, res, next){
-        const category = await Category.findByPk(req.params.id, {
-            include: {
-                model: Product, as: 'products',
-                include: [ 'tva', 'categories', 'product_reviews' ]
-            }
-        });
-        if(!category) next(new NotFoundError('Non existent data'))
+    async getAllShop (_, res, next) {
+        const categories = await query.getAllShop();
+        if(categories.length === 0) next(new NotFoundError('Non existent data'))
+        res.status(200).send({ categories });
+    },
+
+    async getOneShop(req, res, next){
+        const categoryArr = await query.getOneShop(req.params.id);
+        if(categoryArr.length === 0) next(new NotFoundError('Non existent data'));
+        const category = categoryArr[0]
+        res.status(200).json({ category })
+    },
+
+    async getOneAdmin(req, res, next){
+        const category = await query.getOneAdmin(req.params.id);
+        if(!category) next(new NotFoundError('Non existent data'));
         res.status(200).json({ category })
     },
 
     async createOne(req, res){
-        const newCategory = await Category.create(req.body)
+        const newCategory = await query.createOne(req.body)
         res.status(201).send({ newCategory });
     },
 
     async updateOnePatch(req, res, next){
-        const category = await Category.findByPk(req.params.id);
+        const category = await query.getOne(req.params.id);
         if(!category) next(new NotFoundError('Non existent data'))
-        await category.update(req.body);
+        await query.updateOne(category, req.body);
         res.status(201).send({ category });
     },
 
     async updateOnePut(req, res){
-        const category = await Category.findByPk(req.params.id);
+        const category = await query.getOne(req.params.id);
         if(!category) {
-            const newCategory = await Category.create(req.body);
+            const newCategory = query.createOne(req.body);
             res.status(201).send({ newCategory });
         } else {
             const cat = category.get({plain: true})
             for(const i in cat) if(i !== "created_at" && i !== 'id' ) delete (cat[i]); 
-            const categoryToSave = Object.assign({}, cat, req.body)
-            await category.update(categoryToSave);
+            const body = Object.assign({}, cat, req.body)
+            await query.updateOne(category, body);
             res.status(201).send({ category });
         }
     },
 
     async deleteOne(req, res, next){
-        const category = await Category.findByPk(req.params.id);
+        const category = await query.getOne(req.params.id);
         if(!category) next(new NotFoundError('Non existent data'))
-        await category.destroy();
-        res.status(204).send();
+        await query.deleteOne();
+        res.status(204).end();
     }
 
 }

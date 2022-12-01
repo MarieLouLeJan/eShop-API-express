@@ -1,54 +1,63 @@
 import { Product } from '../database/models/index.js';
 import NotFoundError from '../helpers/NotFoundError.js';
+import query from '../services/queries/productQueries.js';
 
 export default {
 
-    async getAll (req, res, next) {
-        const products = await Product.findAll({
-            include: [ 'tva', 'categories', 'product_reviews' ]
-        });
+    async getAllAdmin (req, res, next) {
+        const products = await query.getAll();
         if(products.length === 0) next(new NotFoundError('Non existent data'))
         res.status(200).send({ products });
     },
 
-    async getOne(req, res, next){
-        const product = await Product.findByPk(req.params.id, {
-            include: [ 'tva', 'categories', 'product_reviews' ]
-        });
+    async getAllShop (req, res, next) {
+        const products = await query.getAllShop();
+        if(products.length === 0) next(new NotFoundError('Non existent data'))
+        res.status(200).send({ products });
+    },
+
+    async getOneAdmin(req, res, next){
+        const product = await query.getOneAdmin(req.params.id);
+        if(!product) next(new NotFoundError('Non existent data'))
+        res.status(200).send({ product });
+    },
+
+    async getOneShop(req, res, next){
+        const product = await query.getOneShop(req.params.id);
         if(!product) next(new NotFoundError('Non existent data'))
         res.status(200).send({ product });
     },
 
     async createOne(req, res){
-        const newProduct = await Product.create(req.body)
+        const newProduct = await query.create(req.body)
         res.status(201).send({ newProduct });
     },
 
     async updateOnePatch(req, res, next){
-        const product = await Product.findByPk(req.params.id);
+        const product = await query.getOne(req.params.id);
         if(!product) next(new NotFoundError('Non existent data'))
-        await product.update(req.body)
+        await query.updateOne(product, req.body)
         res.status(201).send({ product });
     },
 
     async updateOnePut(req, res){
-        const product = await Product.findByPk(req.params.id);
+        const product = await query.getOne(req.params.id);
         if(!product) {
-            const newProduct = await Product.create(req.body);
+            const newProduct = await query.createOne(req.body);
             res.status(201).send({ newProduct });
         } else {
             const prod = product.get({plain: true})
             for(const i in prod) if(i !== "created_at" && i !== 'id' ) delete (prod[i]); 
-            const productToSave = Object.assign({}, prod, req.body)
-            await product.update(productToSave);
+            const body = Object.assign({}, prod, req.body)
+            await query.updateOne(product, body);
             res.status(201).send({ product });
         }
     },
 
     async deleteOne(req, res, next){
-        const product = await Product.findByPk(req.params.id);
+        const product = await query.getOne(req.params.id);
         if(!product) next(new NotFoundError('Non existent data'))
-        await product.destroy();
-        res.status(204).send();
+        await query.deleteOne(product);
+        res.status(204).end();
     }
 }

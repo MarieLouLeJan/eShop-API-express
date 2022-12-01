@@ -9,19 +9,26 @@ import param from '../helpers/paramsIsNumber.js'
 import bodyMaker from '../helpers/bodyMaker.js'
 
 import validate from '../services/validations/validate.js';
-import { productComp, productPart } from '../services/validations/schemas/product.js'
+import { productComp, productPart } from '../services/validations/schemas/product.js';
+import auth from '../services/middlewares/auth.js';
+import authAdmin from '../services/middlewares/authAdmin.js';
+import authUser from '../services/middlewares/authUser.js';
 
-productRouter.get('/getAll', CW(controller.getAll));
+productRouter.get('/getAllAdmin', auth, authAdmin, CW(controller.getAllAdmin));
 
-productRouter.get('/getOne/:id', param, CW(controller.getOne));
+productRouter.get('/getAllShop', CW(controller.getAllShop));
 
-productRouter.post('/createOne', validate(productComp, 'body'), CW(controller.createOne));
+productRouter.get('/getOneAdmin/:id', param, auth, authAdmin, CW(controller.getOneAdmin));
 
-productRouter.put('/updateOnePut/:id', param, bodyMaker, validate(productComp, 'body'), CW(controller.updateOnePut));
+productRouter.get('/getOneShop/:id', param, CW(controller.getOneShop));
 
-productRouter.patch('/updateOnePatch/:id', param, bodyMaker, validate(productPart, 'body'), CW(controller.updateOnePatch));
+productRouter.post('/createOne', auth, authAdmin, validate(productComp, 'body'), CW(controller.createOne));
 
-productRouter.delete('/deleteOne/:id', param, CW(controller.deleteOne));
+productRouter.put('/updateOnePut/:id', param, bodyMaker, auth, authAdmin, validate(productComp, 'body'), CW(controller.updateOnePut));
+
+productRouter.patch('/updateOnePatch/:id', param, bodyMaker, auth, authAdmin, validate(productPart, 'body'), CW(controller.updateOnePatch));
+
+productRouter.delete('/deleteOne/:id', param, auth, authAdmin, CW(controller.deleteOne));
 
 
 export default productRouter;

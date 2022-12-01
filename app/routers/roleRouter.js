@@ -10,17 +10,19 @@ import bodyMaker from '../helpers/bodyMaker.js'
 
 import validate from '../services/validations/validate.js';
 import { roleComp, rolePart } from '../services/validations/schemas/role.js'
+import auth from '../services/middlewares/auth.js';
+import authAdmin from '../services/middlewares/authAdmin.js';
 
-roleRouter.get('/getAll', CW(controller.getAll));
+roleRouter.get('/getAll', auth, authAdmin, CW(controller.getAll));
 
-roleRouter.get('/getOne/:id', param, CW(controller.getOne));
+roleRouter.get('/getOne/:id', param, auth, authAdmin, CW(controller.getOne));
 
-roleRouter.post('/createOne', validate(roleComp, 'body'), CW(controller.createOne));
+roleRouter.post('/createOne', auth, authAdmin, validate(roleComp, 'body'), CW(controller.createOne));
 
-roleRouter.put('/updateOnePut/:id', param, bodyMaker, validate(roleComp, 'body'), CW(controller.updateOnePut));
+roleRouter.put('/updateOnePut/:id', param, bodyMaker, auth, authAdmin, validate(roleComp, 'body'), CW(controller.updateOnePut));
 
-roleRouter.patch('/updateOnePatch/:id', param, bodyMaker, validate(rolePart, 'body'), CW(controller.updateOnePatch));
+roleRouter.patch('/updateOnePatch/:id', param, bodyMaker, auth, authAdmin, validate(rolePart, 'body'), CW(controller.updateOnePatch));
 
-roleRouter.delete('/deleteOne/:id', param, CW(controller.deleteOne));
+roleRouter.delete('/deleteOne/:id', param, auth, authAdmin, CW(controller.deleteOne));
 
 export default roleRouter;

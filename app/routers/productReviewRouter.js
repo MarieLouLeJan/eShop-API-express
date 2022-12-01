@@ -7,19 +7,21 @@ import CW from '../helpers/controllerWrapper.js';
 import bodyMaker from '../helpers/bodyMaker.js'
 
 import validate from '../services/validations/validate.js';
-import { productReviewCreated, productReviewChanged } from '../services/validations/schemas/productReview.js'
+import { productReviewCreated, productReviewChanged } from '../services/validations/schemas/productReview.js';
+import auth from '../services/middlewares/auth.js';
+import authAdmin from '../services/middlewares/authAdmin.js';
 
-productReviewRouter.get('/getAll', CW(controller.getAll));
+productReviewRouter.get('/getAll', auth, authAdmin, CW(controller.getAll));
 
-productReviewRouter.post('/getByProduct', CW(controller.getAllByProduct));
+productReviewRouter.get('/getByProduct/:id', CW(controller.getAllByProduct));
 
-productReviewRouter.post('/getOne', bodyMaker, validate(productReviewChanged), CW(controller.getOne));
+productReviewRouter.post('/getOne', bodyMaker, auth, authAdmin, validate(productReviewChanged, 'body'), CW(controller.getOne));
 
-productReviewRouter.put('/updateOne', bodyMaker, validate(productReviewChanged), CW(controller.updateOne))
+productReviewRouter.put('/updateOne', bodyMaker, auth, authAdmin, validate(productReviewChanged, 'body'), CW(controller.updateOne))
 
-productReviewRouter.post('/createOne', validate(productReviewCreated, 'body'), CW(controller.createOne));
+productReviewRouter.post('/createOne', auth, validate(productReviewCreated, 'body'), CW(controller.createOne));
 
-productReviewRouter.delete('/deleteOne', bodyMaker, validate(productReviewChanged), CW(controller.deleteOne))
+productReviewRouter.delete('/deleteOne', bodyMaker, auth, authAdmin, validate(productReviewChanged, 'body'), CW(controller.deleteOne))
 
 
 export default productReviewRouter;

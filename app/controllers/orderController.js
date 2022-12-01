@@ -1,86 +1,75 @@
-import { Order, Order_product, Product, Order_type_adress } from '../database/models/index.js';
 import NotFoundError from '../helpers/NotFoundError.js';
-
+import query from '../services/queries/orderQueries.js';
+import OPQuery from '../services/queries/orderProductQueries.js';
+import OTAQuery from '../services/queries/orderTypeAdressQueries.js';
+import UnauthorizedError from '../helpers/UnauthorizedError.js';
 
 export default {
 
     async getAll (_, res, next) {
-        const orders = await Order.findAll({
-            include: [ 'order_states', 'users' ]
-        });
+        const orders = await query.getAll();
         if(!orders) next(new NotFoundError('Non existent data'))
         res.status(200).send({ orders });
     },
 
     async getOne(req, res, next){
         const id = req.params.id
-        const order = await Order.findByPk(id,{
-            include: [ 'order_states', 'users' ]
-        });
+        const order = await query.getOne(id);
         if(!order) next(new NotFoundError('Non existent data'))
-        const products = await Order_product.findAll({
-            where: { order_id: id },
-            include: { model: Product }
-        });
-        const adresses = await Order_type_adress.findAll({
-            where: { order_id: id },
-            include: [ 'adress', 'adress_type' ]
-        })
+        const products = await OPQuery.getByOrder(id);
+        const adresses = await OTAQuery.getByOrder(id)
         res.status(200).json({ order, products, adresses })
     },
 
     async getByUSer(req, res, next){
-        const orders = await Order.findAll({
-            where: { user_id: req.params.id }
-        });
+        const orders = await query.getByUser();
         if(orders.length === 0) next(new NotFoundError('Non existent data'))
         res.status(200).json({ orders })
     },
 
-    async createOne(req, res){
-        const newOrder = await Order.create(req.body)
+    async createOne(req, res, next){
+        if(req.body.user_id !== req.token.user.id && req.token.user.roles.title !== 'admin') {
+            next(new UnauthorizedError(`You don't have the permission to access`))
+        }
+        const newOrder = await query.createOne(req.body)
         res.status(201).send({ newOrder });
     },
 
     async updateOnePatch(req, res, next){
-        const order = await Order.findByPk(req.params.id);
-        if(!order) next(new NotFoundError('Non existent data'))
-        await order.update(req.body);
+        const order = await query.getOne(req.params.id);
+        if(!order) next(new NotFoundError('Non existent data'));
+        if(order.users.id !== req.token.user.id && req.token.user.roles.title !== 'admin') {
+            next(new UnauthorizedError(`You don't have the permission to access`))
+        }
+        await query.updateOne(order, req.body);
         res.status(201).send({ order });
     },
 
-    async updateOnePut(req, res){
-        const order = await Order.findByPk(req.params.id);
+    async updateOnePut(req, res, next){
+        if(req.body.user_id !== req.token.user.id && req.token.user.roles.title !== 'admin') {
+            next(new UnauthorizedError(`You don't have the permission to access`))
+        }
+        const order = await query.getOne(req.params.id);
         if(!order) {
-            const newOrder = await Order.create(req.body);
+            const newOrder = await query.createOne(req.body);
             res.status(201).send({ newOrder });
         } else {
             const ord = order.get({plain: true})
             for(const i in ord) if(i !== "created_at" && i !== 'id' ) delete (ord[i]); 
-            const orderToSave = Object.assign({}, ord, req.body)
-            await order.update(orderToSave);
+            const body = Object.assign({}, ord, req.body)
+            await query.updateOne(order, body);
             res.status(201).send({ order });
         }
     },
 
     async deleteOne(req, res, next){
         const id = req.params.id;
-
-        const ordToDelete = await Order.findByPk(id);
+        const ordToDelete = await query.getOne(id);
         if(!ordToDelete) next(new NotFoundError('Non existent data'))
-
-        const prodToDelete = await Order_product.findAll({
-            where: { order_id: id }
-        });
-        if(prodToDelete) for(const i of prodToDelete) { await i.destroy() }
-
-        const addToDelete = await Order_type_adress.findAll({
-            where: { order_id: id }
-        });
-        if(addToDelete) for(const i of addToDelete) { await i.destroy() }
-
-        await ordToDelete.destroy();
-
-        res.status(204).send();
+        if(ordToDelete.users.id !== req.token.user.id && req.token.user.roles.title !== 'admin') {
+            next(new UnauthorizedError(`You don't have the permission to access`))
+        }
+        await query.deleteOne(ordToDelete);
+        res.status(204).end();
     },
 }

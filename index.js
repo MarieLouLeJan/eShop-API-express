@@ -33,6 +33,18 @@ const options = {
                 url: `http://localhost:${PORT}`
             }
         ],
+        components: {
+            securitySchemes: {
+                bearerAuth: {
+                    type: 'http',
+                    in: 'header',
+                    name: 'Authorization',
+                    scheme: 'bearer',
+                    bearerFormat: 'JWT'
+                }
+            }
+        },
+        security: [ { bearerAuth: [] } ],
     },
     apis: ['./app/services/swagger/*.js'],
 };

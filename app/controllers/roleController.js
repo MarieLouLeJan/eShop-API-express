@@ -1,51 +1,52 @@
-import { Role } from '../database/models/index.js';
 import NotFoundError from '../helpers/NotFoundError.js';
+import query from '../services/queries/roleQueries.js';
+
 
 export default {
 
     async getAll (_, res, next) {
-        const roles = await Role.findAll();
+        const roles = await query.getAll();
         if(roles.length === 0) next(new NotFoundError('Non existent data'))
         res.status(200).send({ roles });
     },
 
     async getOne(req, res, next){
-        const role = await Role.findByPk(req.params.id);
+        const role = await query.getOne(req.params.id);
         if(!role) next(new NotFoundError('Non existent data'))
         res.status(200).send({ role });
     },
 
     async createOne(req, res){
-        const newRole = await Role.create(req.body)
+        const newRole = await query.createOne(req.body)
         res.status(201).send({ newRole });
     },
 
     async updateOnePatch(req, res, next){
-        const role = await Role.findByPk(req.params.id);
+        const role = await query.getOne(req.params.id);
         if(!role) next(new NotFoundError('Non existent data'))
-        await role.update(req.body);
+        await query.update(role, req.body);
         res.status(201).send({ role });
     },
 
     async updateOnePut(req, res){
-        const role = await Role.findByPk(req.params.id);
+        const role = await query.getOne(req.params.id);
         if(!role) {
-            const newRole = await Role.create(req.body);
+            const newRole = query.createOne(req.body);
             res.status(201).send({ newRole });
         } else {
             const ro = role.get({plain: true})
             for(const i in ro) if(i !== "created_at" && i !== 'id' ) delete (ro[i]); 
-            const roleToSave = Object.assign({}, ro, req.body)
-            await role.update(roleToSave);
+            const body = Object.assign({}, ro, req.body)
+            await query.updateOne(role, body);
             res.status(201).send({ role });
         }
     },
 
     async deleteOne(req, res, next){
-        const role = await Role.findByPk(req.params.id);
+        const role = await query.getOne(req.params.id);
         if(!role) next(new NotFoundError('Non existent data'))
-        await role.destroy();
-        res.status(204).send();
+        await query.deleteOne(role);
+        res.status(204).end();
     }
 
 }

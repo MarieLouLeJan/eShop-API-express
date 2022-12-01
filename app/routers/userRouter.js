@@ -10,20 +10,23 @@ import bodyMaker from '../helpers/bodyMaker.js'
 
 import validate from '../services/validations/validate.js';
 import { userPart, userComp } from '../services/validations/schemas/user.js'
+import auth from '../services/middlewares/auth.js';
+import authAdmin from '../services/middlewares/authAdmin.js';
+import authUser from '../services/middlewares/authUser.js';
 
-userRouter.get('/getAll', CW(controller.getAll));
+userRouter.get('/getAll', auth, authAdmin, CW(controller.getAll));
 
-userRouter.get('/getOne/:id', param, CW(controller.getOne));
+userRouter.get('/getOne/:id', param, auth, authAdmin, CW(controller.getOne));
 
-userRouter.post('/login', validate(userPart), CW(controller.login));
+userRouter.post('/login', validate(userPart, 'body'), CW(controller.login));
 
 userRouter.post('/createOne', validate(userComp, 'body'), CW(controller.createOne));
 
-userRouter.put('/updateOnePut/:id', param, bodyMaker, validate(userComp, 'body'), CW(controller.updateOnePut));
+userRouter.put('/updateOnePut/:id', param, bodyMaker, auth, validate(userComp, 'body'), CW(controller.updateOnePut));
 
-userRouter.patch('/updateOnePatch/:id', param, bodyMaker, validate(userPart, 'body'), CW(controller.updateOnePatch));
+userRouter.patch('/updateOnePatch/:id', param, bodyMaker, auth, validate(userPart, 'body'), CW(controller.updateOnePatch));
 
-userRouter.delete('/deleteOne/:id', param, CW(controller.deleteOne));
+userRouter.delete('/deleteOne/:id', param, auth, authAdmin, CW(controller.deleteOne));
 
 
 export default userRouter;

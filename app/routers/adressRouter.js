@@ -9,21 +9,25 @@ import param from '../helpers/paramsIsNumber.js'
 import bodyMaker from '../helpers/bodyMaker.js'
 
 import validate from '../services/validations/validate.js';
-import { adressComp, adressPart } from '../services/validations/schemas/adress.js'
+import { adressComp, adressPart } from '../services/validations/schemas/adress.js';
+import auth from '../services/middlewares/auth.js';
+import authAdmin from '../services/middlewares/authAdmin.js';
+import authUser from '../services/middlewares/authUser.js';
 
 
-adressRouter.get('/getAll', CW(controller.getAll));
 
-adressRouter.get('/getOne/:id', param, CW(controller.getOne));
+adressRouter.get('/getAll', auth, authAdmin, CW(controller.getAll));
 
-adressRouter.get('/getByUser/:id', param, CW(controller.getByUser))
+adressRouter.get('/getOne/:id', param, auth, CW(controller.getOne));
 
-adressRouter.post('/createOne', validate(adressComp, 'body'), CW(controller.createOne));
+adressRouter.get('/getByUser/:id', param, auth, authUser, CW(controller.getByUser))
 
-adressRouter.put('/updateOnePut/:id', param, bodyMaker, validate(adressComp, 'body'), CW(controller.updateOnePut));
+adressRouter.post('/createOne', auth, validate(adressComp, 'body'), CW(controller.createOne));
 
-adressRouter.patch('/updateOnePatch/:id', param, bodyMaker, validate(adressPart, 'body'), CW(controller.updateOnePatch));
+adressRouter.put('/updateOnePut/:id', param, bodyMaker, auth, validate(adressComp, 'body'), CW(controller.updateOnePut));
 
-adressRouter.delete('/deleteOne/:id', param, CW(controller.deleteOne));
+adressRouter.patch('/updateOnePatch/:id', param, bodyMaker, auth, validate(adressPart, 'body'), CW(controller.updateOnePatch));
+
+adressRouter.delete('/deleteOne/:id', param, auth, CW(controller.deleteOne));
 
 export default adressRouter;

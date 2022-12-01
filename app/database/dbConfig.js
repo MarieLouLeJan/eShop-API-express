@@ -1,6 +1,6 @@
 import { Sequelize } from 'sequelize';
 
-const sequelize = new Sequelize("postgresql://spedata:spedata@localhost/ecommerce", {
+const sequelize = new Sequelize(process.env.PGURL, {
     logging: false,
     define: {
         createdAt: 'created_at',

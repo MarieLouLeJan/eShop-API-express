@@ -1,50 +1,51 @@
-import { OrderState } from '../database/models/index.js';
 import NotFoundError from '../helpers/NotFoundError.js';
+import query from '../services/queries/adressQueries.js';
+
 
 export default {
 
     async getAll (req, res, next) {
-        const orderStates = await OrderState.findAll();
+        const orderStates = await query.getAll();
         if(orderStates.length ===0) next(new NotFoundError('Non existent data'))
         res.status(200).send({ orderStates });
     },
 
     async getOne(req, res, next){
-        const orderState = await OrderState.findByPk(req.params.id);
+        const orderState = await query.getOne(req.params.id);
         if(!orderState) next(new NotFoundError('Non existent data'))
         res.status(200).send({ orderState });
     },
 
     async createOne(req, res){
-        const newOrderState = await OrderState.create(req.body);
+        const newOrderState = await query.createOne(req.body);
         res.status(201).send({ newOrderState });
     },
 
     async updateOnePatch(req, res, next){
-        const orderState = await OrderState.findByPk(req.params.id);
+        const orderState = await query.getOne(req.params.id);
         if(!orderState) next(new NotFoundError('Non existent data'))
-        await orderState.update(req.body);
+        await query.updateOne(orderState, req.body);
         res.status(201).send({ orderState });
     },
 
     async updateOnePut(req, res){
-        const orderState = await OrderState.findByPk(req.params.id);
+        const orderState = await query.getOne(req.params.id);
         if(!orderState) {
-            const newOrderState = await OrderState.create(req.body);
+            const newOrderState = await query.createOne(req.body);
             res.status(201).send({ newOrderState });
         } else {
             const OS = orderState.get({plain: true})
             for(const i in OS) if(i !== "created_at" && i !== 'id' ) delete (OS[i]); 
-            const orderStateToSave = Object.assign({}, OS, req.body)
-            await orderState.update(orderStateToSave);
+            const body = Object.assign({}, OS, req.body)
+            await query.updateOne(orderState, body);
             res.status(201).send({ orderState });
         }
     },
 
     async deleteOne(req, res, next){
-        const orderState = await OrderState.findByPk(req.params.id);
+        const orderState = await query.getOne(req.params.id);
         if(!orderState) next(new NotFoundError('Non existent data'))
-        await orderState.destroy();
-        res.status(204).send();
+        await query.deleteOne();
+        res.status(204).end();
     }
 }

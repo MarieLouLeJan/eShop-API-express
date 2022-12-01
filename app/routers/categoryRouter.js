@@ -11,17 +11,22 @@ import bodyMaker from '../helpers/bodyMaker.js'
 import validate from '../services/validations/validate.js';
 import { categoryComp, categoryPart } from '../services/validations/schemas/category.js'
 
+import auth from '../services/middlewares/auth.js';
+import authAdmin from '../services/middlewares/authAdmin.js';
 
-categoryRouter.get('/getAll', CW(controller.getAll));
 
-categoryRouter.get('/getOne/:id', param, CW(controller.getOne));
+categoryRouter.get('/getAllAdmin', auth, authAdmin, CW(controller.getAllAdmin));
 
-categoryRouter.post('/createOne', validate(categoryComp, 'body'), CW(controller.createOne));
+categoryRouter.get('/getAllShop', CW(controller.getAllShop));
 
-categoryRouter.put('/updateOnePut/:id', param, bodyMaker, validate(categoryComp, 'body'), CW(controller.updateOnePut));
+categoryRouter.get('/getOneAdmin/:id', param, auth, authAdmin, CW(controller.getOneAdmin));
 
-categoryRouter.patch('/updateOnePatch/:id', param, bodyMaker, validate(categoryPart, 'body'), CW(controller.updateOnePatch));
+categoryRouter.post('/createOne', auth, authAdmin, validate(categoryComp, 'body'), CW(controller.createOne));
 
-categoryRouter.delete('/deleteOne/:id', param, CW(controller.deleteOne));
+categoryRouter.put('/updateOnePut/:id', param, bodyMaker, auth, authAdmin, validate(categoryComp, 'body'), CW(controller.updateOnePut));
+
+categoryRouter.patch('/updateOnePatch/:id', param, bodyMaker, auth, authAdmin, validate(categoryPart, 'body'), CW(controller.updateOnePatch));
+
+categoryRouter.delete('/deleteOne/:id', param, auth, authAdmin, CW(controller.deleteOne));
 
 export default categoryRouter;
