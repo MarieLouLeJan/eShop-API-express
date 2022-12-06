@@ -34,10 +34,7 @@ export default {
             const newRole = query.createOne(req.body);
             res.status(201).send({ newRole });
         } else {
-            const ro = role.get({plain: true})
-            for(const i in ro) if(i !== "created_at" && i !== 'id' ) delete (ro[i]); 
-            const body = Object.assign({}, ro, req.body)
-            await query.updateOne(role, body);
+            await query.updateOne(role, req.body);
             res.status(201).send({ role });
         }
     },

@@ -34,10 +34,7 @@ export default {
             const newOrderState = await query.createOne(req.body);
             res.status(201).send({ newOrderState });
         } else {
-            const OS = orderState.get({plain: true})
-            for(const i in OS) if(i !== "created_at" && i !== 'id' ) delete (OS[i]); 
-            const body = Object.assign({}, OS, req.body)
-            await query.updateOne(orderState, body);
+            await query.updateOne(orderState, req.body);
             res.status(201).send({ orderState });
         }
     },

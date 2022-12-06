@@ -26,10 +26,7 @@ export default {
             const newAdressType = await query.createOne(req.body);
             res.status(201).send({ newAdressType });
         } else {
-            const AT = adressType.get({plain: true})
-            for(const i in AT) if(i !== "created_at" && i !== 'id' ) delete (AT[i]); 
-            const body = Object.assign({}, AT, req.body)
-            await query.updateOne(adressType, body);
+            await query.updateOne(adressType, req.body);
             res.status(200).send({ adressType });
         }
     },

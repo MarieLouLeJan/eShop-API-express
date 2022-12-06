@@ -52,10 +52,7 @@ export default {
             const newAdress = await query.createOne(req.body);
             res.status(201).send({ newAdress });
         } else {
-            const ad = adress.get({plain: true})
-            for(const i in ad) if(i !== "created_at" && i !== 'id' ) delete (ad[i]); 
-            const body = Object.assign({}, ad, req.body)
-            await query.updateOne(adress, body);
+            await query.updateOne(adress, req.body);
             res.status(200).send({ adress });
         }
     },

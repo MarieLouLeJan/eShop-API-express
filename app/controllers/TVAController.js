@@ -33,10 +33,7 @@ export default {
             const newTVA = await query.createOne(req.body);
             res.status(201).send({ newTVA });
         } else {
-            const T = tva.get({plain: true})
-            for(const i in T) if(i !== "created_at" && i !== 'id' ) delete (T[i]); 
-            const body = Object.assign({}, T, req.body)
-            await query.updateOne(tva, body);
+            await query.updateOne(tva, req.body);
             res.status(201).send({ tva });
         }
     },

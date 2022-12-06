@@ -46,10 +46,7 @@ export default {
             const newProduct = await query.createOne(req.body);
             res.status(201).send({ newProduct });
         } else {
-            const prod = product.get({plain: true})
-            for(const i in prod) if(i !== "created_at" && i !== 'id' ) delete (prod[i]); 
-            const body = Object.assign({}, prod, req.body)
-            await query.updateOne(product, body);
+            await query.updateOne(product, req.body);
             res.status(201).send({ product });
         }
     },

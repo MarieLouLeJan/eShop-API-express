@@ -46,10 +46,7 @@ export default {
             const newCategory = query.createOne(req.body);
             res.status(201).send({ newCategory });
         } else {
-            const cat = category.get({plain: true})
-            for(const i in cat) if(i !== "created_at" && i !== 'id' ) delete (cat[i]); 
-            const body = Object.assign({}, cat, req.body)
-            await query.updateOne(category, body);
+            await query.updateOne(category, req.body);
             res.status(201).send({ category });
         }
     },
