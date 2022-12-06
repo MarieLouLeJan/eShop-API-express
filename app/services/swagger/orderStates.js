@@ -22,7 +22,7 @@
  * /orderStates/getAll:
  *  get:
  *      summary: Return the list of all the orderStates
- *      tags: [Orderstates]
+ *      tags: [OrderStates]
  *      responses:
  *          200:
  *              description: The list of the orderStates
@@ -42,7 +42,7 @@
  * /orderStates/getOne/{id}:
  *  get:
  *      summary: Get a orderState by id
- *      tags: [Orderstates]
+ *      tags: [OrderStates]
  *      parameters:
  *        - in: path
  *          name: id
@@ -71,7 +71,7 @@
  * /orderStates/createOne:   
  *  post:
  *      summary: Create a new orderState
- *      tags: [Orderstates]
+ *      tags: [OrderStates]
  *      requestBody:
  *          required: true
  *          content:
@@ -94,7 +94,7 @@
  * /orderStates/updateOnePatch/{id}:
  *  patch:
  *      summary: update a category by the id
- *      tags: [Orderstates]
+ *      tags: [OrderStates]
  *      parameters:
  *        - in: path
  *          name: id
@@ -126,7 +126,7 @@
  * /orderStates/updateOnePut/{id}:
  *  put:
  *      summary: update a category by the id
- *      tags: [Orderstates]
+ *      tags: [OrderStates]
  *      parameters:
  *        - in: path
  *          name: id
@@ -164,7 +164,7 @@
  * /orderState/deleteOne/{id}:
  *  delete:
  *      summary: delete a orderState type by the id
- *      tags: [OrderState]
+ *      tags: [OrderStates]
  *      parameters:
  *        - in: path
  *          name: id

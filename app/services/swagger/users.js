@@ -227,7 +227,7 @@
  * /users/deleteOne/{id}:
  *  delete:
  *      summary: delete a user type by the id
- *      tags: [User]
+ *      tags: [Users]
  *      parameters:
  *        - in: path
  *          name: id

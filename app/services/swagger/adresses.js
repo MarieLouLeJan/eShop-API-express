@@ -148,6 +148,40 @@
  *              description: Some servor error
  */
 
+
+/**
+ * @swagger
+ * /adresses/updateOnePatch/{id}:
+ *  patch:
+ *      summary: update a adress by the id
+ *      tags: [Adresses]
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          schema:
+ *            type: number
+ *          required: true
+ *          description: The adress's id
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/Adresses'
+ *      responses:
+ *          200:
+ *              description: The adress was updated
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/Adresses'        
+ *          404:
+ *              description: The data was not found
+ *          500:
+ *              description: Some servor error
+ */
+
+
 /**
  * @swagger
  * /adresses/createOne:   
@@ -203,38 +237,6 @@
  *                  application/json:
  *                      schema:
  *                          $ref: '#/components/schemas/Adresses' 
- *          404:
- *              description: The data was not found
- *          500:
- *              description: Some servor error
- */
-
-/**
- * @swagger
- * /adresses/updateOnePatch/{id}:
- *  patch:
- *      summary: update a adress by the id
- *      tags: [Adresses]
- *      parameters:
- *        - in: path
- *          name: id
- *          schema:
- *            type: number
- *          required: true
- *          description: The adress's id
- *      requestBody:
- *          required: true
- *          content:
- *              application/json:
- *                  schema:
- *                      $ref: '#/components/schemas/Adresses'
- *      responses:
- *          200:
- *              description: The adress was updated
- *              content:
- *                  application/json:
- *                      schema:
- *                          $ref: '#/components/schemas/Adresses'        
  *          404:
  *              description: The data was not found
  *          500:

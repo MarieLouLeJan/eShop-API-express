@@ -68,6 +68,39 @@
 
 /**
  * @swagger
+ * /adressTypes/updateOnePatch/{id}:
+ *  patch:
+ *      summary: update a adress type by the id
+ *      tags: [AdressTypes]
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          schema:
+ *            type: number
+ *          required: true
+ *          description: The adress type id
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/AdressTypes'
+ *      responses:
+ *          200:
+ *              description: The adress type was updated
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/AdressTypes' 
+ *          404:
+ *              description: The data was not found
+ *          500:
+ *              description: Some servor error
+ */
+
+
+/**
+ * @swagger
  * /adressTypes/createOne:   
  *  post:
  *      summary: Create a new adress type
@@ -121,38 +154,6 @@
  *                  application/json:
  *                      schema:
  *                          $ref: '#/components/schemas/AdressTypes'        
- *          404:
- *              description: The data was not found
- *          500:
- *              description: Some servor error
- */
-
-/**
- * @swagger
- * /adressTypes/updateOnePatch/{id}:
- *  patch:
- *      summary: update a adress type by the id
- *      tags: [AdressTypes]
- *      parameters:
- *        - in: path
- *          name: id
- *          schema:
- *            type: number
- *          required: true
- *          description: The adress type id
- *      requestBody:
- *          required: true
- *          content:
- *              application/json:
- *                  schema:
- *                      $ref: '#/components/schemas/AdressTypes'
- *      responses:
- *          200:
- *              description: The adress type was updated
- *              content:
- *                  application/json:
- *                      schema:
- *                          $ref: '#/components/schemas/AdressTypes' 
  *          404:
  *              description: The data was not found
  *          500:
