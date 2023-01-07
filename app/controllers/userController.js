@@ -90,7 +90,7 @@ const controller = {
         if(!user) next(new NotFoundError('Invalid email'))
         user.reset = resetLinkToken(user);
         await user.save();
-        sendEmail(user, resetLink, 'Reset password requested');
+        sendEmail(user, user.reset, 'Reset password requested');
         res.status(200).send({message: 'Check your email'})
     },
 

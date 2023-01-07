@@ -7,7 +7,7 @@ export default function sendEmail(user, token, subject) {
         to: user.email,
         from: "mlou.eshop@gmail.com", // your email
         subject: subject,
-        html: `Hi my sweet love, here is the link to reset your password :<a href="${process.env.CLIENT_URL}/reset-password/${token}">${token}</a>`
+        html: `Forgot your password ? No worries, here is the link to reset: (This link is working for 10 min) :<a href="${process.env.CLIENT_URL}/reset-password/${token}">${token}</a>`
         // I'm only going to use an (a tag) to make this easier to
         // understand but feel free to add any email templates 
         // in the `html` property
