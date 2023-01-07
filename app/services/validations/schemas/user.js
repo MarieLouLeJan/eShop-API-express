@@ -17,3 +17,10 @@ const userSchema = {
 export const userPart = Joi.object(userSchema);
 
 export const userComp = Joi.object(userSchema).fork(['firstname', 'lastname', 'email', 'password', 'role_id'], (schema) => schema.required())
+
+const userLoginSchema = {
+    email: Joi.string().required(),
+    password: Joi.string().required(),
+};
+
+export const userLogin = Joi.object(userLoginSchema);

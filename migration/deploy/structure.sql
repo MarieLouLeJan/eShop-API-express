@@ -26,6 +26,7 @@ CREATE TABLE "users" (
     "password"          TEXT NOT NULL,
     "role_id"           INTEGER NOT NULL REFERENCES roles("id"),
     "active"            BOOLEAN NOT NULL DEFAULT true,
+    "reset"             TEXT,
     "created_at"        TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 

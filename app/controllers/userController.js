@@ -1,8 +1,11 @@
+/* eslint-disable no-unused-vars */
 import bcrypt from 'bcrypt';
 import NotFoundError from '../helpers/NotFoundError.js';
 import query from '../services/queries/userQueries.js';
 import jwt from 'jsonwebtoken';
 import UnauthorizedError from '../helpers/UnauthorizedError.js';
+import sendEmail from '../services/sendEmailFunction.js';
+import { resetLinkToken, generateAccessToken } from '../services/generateToken.js'
 
 
 const controller = {
@@ -30,7 +33,7 @@ const controller = {
         const passwordOk = await bcrypt.compare(req.body.password, userFound.password);
         if(!passwordOk ) return res.status(401).send({message :'wrong password or email'});
         const {password, ...user} = userFound.get({ plain: true });
-        const token = jwt.sign({ user }, process.env.SALT )
+        const token = generateAccessToken(user)
         res.status(200).send({ token, user });
     },
 
@@ -57,7 +60,7 @@ const controller = {
         res.status(201).send({ user });
     },
 
-    async updateOnePut(req, res){
+    async updateOnePut(req, res, next){
         const id = req.params.id
         if(req.token.user.id !== id && req.token.user.roles.title !== 'admin') {
             next(new UnauthorizedError(`You don't have the permission to access`))
@@ -78,6 +81,36 @@ const controller = {
         if(!user) next(new NotFoundError('user was not found'))
         await query.deleteOne(user);
         res.status(204).end();
+    },
+
+    async resetPassword(req, res, next){
+        const { email } = req.body;
+        const users = await query.getAll();
+        const user = users.find(user => user.email === email)
+        if(!user) next(new NotFoundError('Invalid email'))
+        user.reset = resetLinkToken(user);
+        await user.save();
+        sendEmail(user, resetLink, 'Reset password requested');
+        res.status(200).send({message: 'Check your email'})
+    },
+
+    async resetPasswordLink(req, res, next) {
+        const resetLink = req.params.token;
+        const newPassword = req.body.password;
+
+        const users = await query.getAll();
+        const user = users.find(user => user.reset === resetLink);
+        if(!user) next(new NotFoundError('Something went wrong, please try again later'))
+        const salt = await bcrypt.genSalt(10);
+        const password = await bcrypt.hash(newPassword, salt);
+        
+        const updatedCredential = {
+            password,
+            resetLink: null
+        }
+
+        await query.updateOne(user, updatedCredential);
+        res.status(200).send({message: 'Password Updated'})
     }
 }
 

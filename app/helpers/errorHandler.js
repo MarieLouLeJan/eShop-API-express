@@ -39,5 +39,7 @@ export default (err, _, res, next) => {
         status = err.status;
         message = err.message
     }
-    res.status(status).send({ error: message });
+
+    const error = { message, status }
+    res.status(status).send(error);
 };

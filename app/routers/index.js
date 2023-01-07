@@ -14,6 +14,9 @@ import orderProductRouter from './orderProductRouter.js'
 import orderTypeAdressRouter from './orderTypeAdressRouter.js'
 import productReviewRouter from './productReviewRouter.js'
 import roleRouter from './roleRouter.js';
+import googleRouter from './googleRouter.js';
+import controller from '../controllers/userController.js'
+import CW from '../helpers/controllerWrapper.js'
 
 
 import NotFoundError from '../helpers/NotFoundError.js'
@@ -31,6 +34,10 @@ router.use('/orderProduct', orderProductRouter);
 router.use('/orderTypeAdress', orderTypeAdressRouter);
 router.use('/productReview',  productReviewRouter);
 router.use('/roles', roleRouter);
+router.use('/', googleRouter)
+
+router.patch('/reset-password', CW(controller.resetPassword));
+router.patch('/reset-password/:token', CW(controller.resetPasswordLink))
 
 
 router.use((_, __, next) => {

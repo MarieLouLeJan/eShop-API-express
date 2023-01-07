@@ -26,6 +26,10 @@ const User = sequelize.define('users',
             allowNull: false,
             defaultValue: true,
         },
+        reset: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        }
 
     },
     {

@@ -169,4 +169,12 @@ Content-Type: application/json
     "password": "password"
 }
 
+### 
+POST http://localhost:8888//reset-password
+Content-Type: application/json
 
+{
+    "order_id": 4,
+    "adress_id": 3,
+    "adress_type_id": 1
+}

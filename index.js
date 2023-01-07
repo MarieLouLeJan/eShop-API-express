@@ -8,15 +8,18 @@ import cors from 'cors';
 import swaggerUI from 'swagger-ui-express';
 import swaggerJsDoc from 'swagger-jsdoc';
 import router from './app/routers/index.js';
-
+import { UI_ROOT_URI } from './app/services/googleAuthConfig.js';
+import cookieParser from "cookie-parser";
 
 
 const PORT = process.env.PORT || 8000;
 
+app.use(cookieParser());
+
 
 app.use(
     cors({
-        origin: `http://127.0.0.1:${PORT}`,
+        origin: UI_ROOT_URI,
         credentials: true
     })
 );
@@ -30,7 +33,7 @@ const options = {
         },
         servers: [
             {
-                url: `http://localhost:${PORT}`
+                url: `http://localhost:${PORT}` || 'http://localhost:8000'
             }
         ],
         components: {
@@ -50,7 +53,7 @@ const options = {
 };
 
 const swaggerSpecs = swaggerJsDoc(options);
-app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpecs));
+app.use('/api-doc', swaggerUI.serve, swaggerUI.setup(swaggerSpecs));
 
 app.use(compression());
 app.use(express.json());
