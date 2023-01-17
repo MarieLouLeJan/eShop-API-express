@@ -1,6 +1,6 @@
 import Joi from 'joi';
 
-const TVAPattern = /^([1-9]|[1-9][0-9])%$/;
+const TVAPattern = /^[a-zA-Z0-9Ã-ÿ .,'"°-]+$/;
 
 const orderProductSchema =  {
     product_id: Joi.number().greater(0),

@@ -14,7 +14,7 @@ import auth from '../services/middlewares/auth.js';
 import authAdmin from '../services/middlewares/authAdmin.js';
 
 
-adressTypeRouter.get('/getAll', auth, authAdmin, CW(controller.getAll));
+adressTypeRouter.get('/getAllAdmin', auth, authAdmin, CW(controller.getAll));
 
 adressTypeRouter.get('/getOne/:id', param, auth, authAdmin, CW(controller.getOne));
 

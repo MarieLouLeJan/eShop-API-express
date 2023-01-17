@@ -22,7 +22,7 @@ export default {
     },
 
     async getOneShop (id) {
-        return await Product.findByPk({
+        return await Product.findByPk(id, {
             include: [ 'tva', 'categories', 'product_reviews' ],
             where: { 
                 active: true,

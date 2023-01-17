@@ -4,9 +4,9 @@ import query from '../services/queries/TVAQueries.js';
 export default {
 
     async getAll (_, res, next) {
-        const TVAs = await query.getAll();
-        if(TVAs.length === 0) next(new NotFoundError('Non existent data'))
-        res.status(200).send({ TVAs });
+        const data = await query.getAll();
+        if(data.length === 0) next(new NotFoundError('Non existent data'))
+        res.status(200).send({ data });
     },
 
     async getOne(req, res, next){

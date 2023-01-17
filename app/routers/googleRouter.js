@@ -44,7 +44,6 @@ const getTokens = async ({ code, clientId, clientSecret, redirectUri }) => {
         redirect_uri: redirectUri,
         grant_type: 'authorization_code'
     };
-
     return axios
         .post(url, querystring.stringify(values), {
             headers: {
@@ -53,7 +52,7 @@ const getTokens = async ({ code, clientId, clientSecret, redirectUri }) => {
         })
         .then((res) => res.data)
         .catch((error) => {
-            console.error(`Failed to fetch auth tokens`);
+            console.error(`Failed to fetch auth tokens ${error}`);
             throw new Error(error.message)
         });
 }
@@ -97,12 +96,8 @@ googleRouter.get(`/${redirectURI}`, async (req, res) => {
 });
 
 googleRouter.get("/auth/me", (req, res, next) => {
-    console.log("get me");
-    console.log(req.cookies[COOKIE_NAME], JWT_SECRET)
     try {
         const decoded = jwt.verify(req.cookies[COOKIE_NAME], JWT_SECRET);
-        console.log("decoded", decoded);
-
         const loginUser = async (req, res, next) => {
             const users = await query.getAll();
             if(users.length === 0) next(new NotFoundError('Data was not found'));

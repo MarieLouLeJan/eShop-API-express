@@ -86,12 +86,8 @@ export const controller = {
     },
 
     async getAuthMe (req, res) {
-        console.log('la', req.cookies[COOKIE_NAME], JWT_SECRET)
-        console.log("get me");
         try {
-            console.log('ici')
             const decoded = jwt.verify(req.cookies[COOKIE_NAME], JWT_SECRET);
-            console.log("decoded", decoded);
             return res.send(decoded);
         } catch (err) {
             console.log(err);

@@ -8,6 +8,11 @@ const Category = sequelize.define('categories',
             allowNull: false,
             unique: true,
         },
+        image: {
+            type: DataTypes.TEXT,
+            allowNull: false,
+            unique: true,
+        },
         active: {
             type: DataTypes.BOOLEAN,
             allowNull: false,

@@ -36,8 +36,8 @@ router.use('/productReview',  productReviewRouter);
 router.use('/roles', roleRouter);
 router.use('/', googleRouter)
 
-router.patch('/reset-password', CW(controller.resetPassword));
-router.patch('/reset-password/:token', CW(controller.resetPasswordLink))
+router.patch('/resetPassword', CW(controller.resetPassword));
+router.patch('/resetPassword/:token', CW(controller.resetPasswordLink))
 
 
 router.use((_, __, next) => {

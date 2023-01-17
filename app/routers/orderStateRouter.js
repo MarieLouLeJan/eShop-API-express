@@ -13,7 +13,7 @@ import { orderStatePart, orderStateComp } from '../services/validations/schemas/
 import auth from '../services/middlewares/auth.js';
 import authAdmin from '../services/middlewares/authAdmin.js';
 
-orderStateRouter.get('/getAll', auth, authAdmin, CW(controller.getAll));
+orderStateRouter.get('/getAllAdmin', auth, authAdmin, CW(controller.getAll));
 
 orderStateRouter.get('/getOne/:id', param, auth, authAdmin, CW(controller.getOne));
 

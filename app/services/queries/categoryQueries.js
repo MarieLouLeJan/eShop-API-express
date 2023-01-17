@@ -4,7 +4,10 @@ export default {
 
     async getAllAdmin () {
         return await Category.findAll({
-            include: 'products'
+            include: {
+                model: Product, as: 'products',
+                include: [ 'tva', 'product_reviews' ]
+            },
         });
     },
 
@@ -12,7 +15,8 @@ export default {
         return await Category.findAll({
             include: {
                 model: Product, as: 'products',
-                include: [ 'tva', 'categories', 'product_reviews' ]
+                include: [ 'tva', 'categories', 'product_reviews' ],
+                where: { active : true}
             },
             where: {
                 active: true

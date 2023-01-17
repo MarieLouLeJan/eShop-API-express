@@ -21,6 +21,8 @@ categoryRouter.get('/getAllShop', CW(controller.getAllShop));
 
 categoryRouter.get('/getOneAdmin/:id', param, auth, authAdmin, CW(controller.getOneAdmin));
 
+categoryRouter.get('/getOneShop/:id', param, CW(controller.getOneShop));
+
 categoryRouter.post('/createOne', auth, authAdmin, validate(categoryComp, 'body'), CW(controller.createOne));
 
 categoryRouter.put('/updateOnePut/:id', param, bodyMaker, auth, authAdmin, validate(categoryComp, 'body'), CW(controller.updateOnePut));

@@ -13,7 +13,7 @@ import authAdmin from '../services/middlewares/authAdmin.js';
 import param from '../helpers/paramsIsNumber.js';
 import bodyMaker from '../helpers/bodyMaker.js';
 
-orderProductRouter.get('/getAll', auth, authAdmin, CW(controller.getAll));
+orderProductRouter.get('/getAllAdmin', auth, authAdmin, CW(controller.getAll));
 
 orderProductRouter.get('/getByOrder/:id', param, auth, CW(controller.getAllByOrder));
 

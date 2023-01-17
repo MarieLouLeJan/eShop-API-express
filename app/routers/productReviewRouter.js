@@ -11,7 +11,7 @@ import { productReviewCreated, productReviewChanged } from '../services/validati
 import auth from '../services/middlewares/auth.js';
 import authAdmin from '../services/middlewares/authAdmin.js';
 
-productReviewRouter.get('/getAll', auth, authAdmin, CW(controller.getAll));
+productReviewRouter.get('/getAllAdmin', auth, authAdmin, CW(controller.getAll));
 
 productReviewRouter.get('/getByProduct/:id', CW(controller.getAllByProduct));
 

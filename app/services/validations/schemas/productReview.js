@@ -1,6 +1,6 @@
 import Joi from 'joi';
 
-const frenchPattern = /^[a-zA-Z0-9Ã-ÿ '"°-]+$/;
+const frenchPattern = /^[a-zA-Z0-9Ã-ÿ .,'"°-]+$/;
 
 const productReviewSchema = {
     product_id: Joi.number().greater(0),

@@ -41,8 +41,8 @@ const controller = {
         const salt = await bcrypt.genSalt(10);
         req.body.password = await bcrypt.hash(req.body.password, salt);
         req.body.email = req.body.email.toLowerCase()
-        const {password, ...newUser} = (await query.createOne(req.body)).get({ plain: true });
-        res.status(201).send({ newUser });
+        const {password, ...user} = (await query.createOne(req.body)).get({ plain: true });
+        res.status(201).send({ user });
     },
 
     async updateOnePatch(req, res, next){
@@ -108,7 +108,6 @@ const controller = {
             password,
             resetLink: null
         }
-
         await query.updateOne(user, updatedCredential);
         res.status(200).send({message: 'Password Updated'})
     }

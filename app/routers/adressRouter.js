@@ -16,7 +16,7 @@ import authUser from '../services/middlewares/authUser.js';
 
 
 
-adressRouter.get('/getAll', auth, authAdmin, CW(controller.getAll));
+adressRouter.get('/getAllAdmin', auth, authAdmin, CW(controller.getAll));
 
 adressRouter.get('/getOne/:id', param, auth, CW(controller.getOne));
 

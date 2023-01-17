@@ -13,7 +13,7 @@ import { roleComp, rolePart } from '../services/validations/schemas/role.js'
 import auth from '../services/middlewares/auth.js';
 import authAdmin from '../services/middlewares/authAdmin.js';
 
-roleRouter.get('/getAll', auth, authAdmin, CW(controller.getAll));
+roleRouter.get('/getAllAdmin', auth, authAdmin, CW(controller.getAll));
 
 roleRouter.get('/getOne/:id', param, auth, authAdmin, CW(controller.getOne));
 

@@ -13,7 +13,7 @@ import { TVAPart, TVAComp } from '../services/validations/schemas/TVA.js'
 import auth from '../services/middlewares/auth.js';
 import authAdmin from '../services/middlewares/authAdmin.js';
 
-TVARouter.get('/getAll', auth, authAdmin, CW(controller.getAll));
+TVARouter.get('/getAllAdmin', auth, authAdmin, CW(controller.getAll));
 
 TVARouter.get('/getOne/:id', param, auth, authAdmin, CW(controller.getOne));
 

@@ -13,13 +13,13 @@ import { userPart, userComp, userLogin } from '../services/validations/schemas/u
 import auth from '../services/middlewares/auth.js';
 import authAdmin from '../services/middlewares/authAdmin.js';
 
-userRouter.get('/getAll', auth, authAdmin, CW(controller.getAll));
+userRouter.get('/getAllAdmin', auth, authAdmin, CW(controller.getAll));
 
 userRouter.get('/getOne/:id', param, auth, authAdmin, CW(controller.getOne));
 
 userRouter.post('/login', validate(userLogin, 'body'), CW(controller.login));
 
-userRouter.post('/createOne', validate(userComp, 'body'), CW(controller.createOne));
+userRouter.post('/register', validate(userComp, 'body'), CW(controller.createOne));
 
 userRouter.put('/updateOnePut/:id', param, bodyMaker, auth, validate(userComp, 'body'), CW(controller.updateOnePut));
 

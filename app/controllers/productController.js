@@ -1,60 +1,60 @@
-import { Product } from '../database/models/index.js';
 import NotFoundError from '../helpers/NotFoundError.js';
 import query from '../services/queries/productQueries.js';
 
 export default {
 
     async getAllAdmin (req, res, next) {
-        const products = await query.getAll();
-        if(products.length === 0) next(new NotFoundError('Non existent data'))
-        res.status(200).send({ products });
+        const data = await query.getAllAdmin();
+        if(data.length === 0) next(new NotFoundError('Non existent data'))
+        res.status(200).send({ data });
     },
 
     async getAllShop (req, res, next) {
-        const products = await query.getAllShop();
-        if(products.length === 0) next(new NotFoundError('Non existent data'))
-        res.status(200).send({ products });
+        const data = await query.getAllShop();
+        if(data.length === 0) next(new NotFoundError('Non existent data'))
+        res.status(200).send({ data });
     },
 
     async getOneAdmin(req, res, next){
-        const product = await query.getOneAdmin(req.params.id);
-        if(!product) next(new NotFoundError('Non existent data'))
-        res.status(200).send({ product });
+        const data = await query.getOneAdmin(req.params.id);
+        if(!data) next(new NotFoundError('Non existent data'))
+        res.status(200).send({ data });
     },
 
     async getOneShop(req, res, next){
-        const product = await query.getOneShop(req.params.id);
-        if(!product) next(new NotFoundError('Non existent data'))
-        res.status(200).send({ product });
+        const data = await query.getOneShop(req.params.id);
+        if(!data) next(new NotFoundError('Non existent data'))
+        res.status(200).send({ data });
     },
 
     async createOne(req, res){
-        const newProduct = await query.create(req.body)
-        res.status(201).send({ newProduct });
+        const data = await query.createOne(req.body)
+        console.log(data)
+        res.status(201).send({ data });
     },
 
     async updateOnePatch(req, res, next){
-        const product = await query.getOne(req.params.id);
-        if(!product) next(new NotFoundError('Non existent data'))
-        await query.updateOne(product, req.body)
-        res.status(201).send({ product });
+        const data = await query.getOneAdmin(req.params.id);
+        if(!data) next(new NotFoundError('Non existent data'))
+        await query.updateOne(data, req.body)
+        res.status(201).send({ data });
     },
 
     async updateOnePut(req, res){
-        const product = await query.getOne(req.params.id);
-        if(!product) {
-            const newProduct = await query.createOne(req.body);
-            res.status(201).send({ newProduct });
+        const data = await query.getOneAdmin(req.params.id);
+        if(!data) {
+            const data = await query.createOne(req.body);
+            res.status(201).send({ data });
         } else {
-            await query.updateOne(product, req.body);
-            res.status(201).send({ product });
+            await query.updateOne(data, req.body);
+            res.status(201).send({ data });
         }
     },
 
     async deleteOne(req, res, next){
-        const product = await query.getOne(req.params.id);
-        if(!product) next(new NotFoundError('Non existent data'))
-        await query.deleteOne(product);
+        const data = await query.getOne(req.params.id);
+        if(!data) next(new NotFoundError('Non existent data'))
+        await query.deleteOne(data);
         res.status(204).end();
     }
 }

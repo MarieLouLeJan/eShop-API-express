@@ -4,7 +4,7 @@ import sequelize from '../dbConfig.js';
 
 const Product = sequelize.define('products',
     {
-        ref: {
+        reference: {
             type: DataTypes.STRING,
             allowNull: false,
             unique: true,

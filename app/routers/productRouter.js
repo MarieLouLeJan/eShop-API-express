@@ -12,7 +12,6 @@ import validate from '../services/validations/validate.js';
 import { productComp, productPart } from '../services/validations/schemas/product.js';
 import auth from '../services/middlewares/auth.js';
 import authAdmin from '../services/middlewares/authAdmin.js';
-import authUser from '../services/middlewares/authUser.js';
 
 productRouter.get('/getAllAdmin', auth, authAdmin, CW(controller.getAllAdmin));
 

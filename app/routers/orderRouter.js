@@ -14,7 +14,7 @@ import auth from '../services/middlewares/auth.js';
 import authAdmin from '../services/middlewares/authAdmin.js';
 import authUser from '../services/middlewares/authUser.js';
 
-orderRouter.get('/getAll', auth, authAdmin, CW(controller.getAll));
+orderRouter.get('/getAllAdmin', auth, authAdmin, CW(controller.getAll));
 
 orderRouter.get('/getOne/:id', param, auth, CW(controller.getOne));
 

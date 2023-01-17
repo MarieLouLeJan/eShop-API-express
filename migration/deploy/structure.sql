@@ -50,6 +50,7 @@ CREATE TABLE "adresses" (
 CREATE TABLE "categories" (
     "id"                INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     "title"             TEXT NOT NULL UNIQUE,
+    "image"             TEXT NOT NULL,
     "active"            BOOLEAN NOT NULL DEFAULT true,
     "created_at"        TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
@@ -66,7 +67,7 @@ CREATE TABLE "tva" (
 
 CREATE TABLE "products" (
     "id"                INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    "ref"               TEXT NOT NULL UNIQUE,
+    "reference"         TEXT NOT NULL UNIQUE,
     "title"             TEXT NOT NULL,
     "description"       TEXT NOT NULL,
     "image"             TEXT NOT NULL,

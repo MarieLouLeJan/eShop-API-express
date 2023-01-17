@@ -12,7 +12,7 @@ import authAdmin from '../services/middlewares/authAdmin.js';
 import validate from '../services/validations/validate.js';
 import { orderTypeAdressComplete, orderTypeAdressChanged } from '../services/validations/schemas/orderTypeAdress.js'
 
-orderTypeAdressRouter.get('/getAll', auth, authAdmin, CW(controller.getAll));
+orderTypeAdressRouter.get('/getAllAdmin', auth, authAdmin, CW(controller.getAll));
 
 orderTypeAdressRouter.get('/getByOrder/:id', param, auth, CW(controller.getByOrder));
 
