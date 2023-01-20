@@ -7,9 +7,9 @@ import UnauthorizedError from '../helpers/UnauthorizedError.js';
 export default {
 
     async getAll (req, res, next) {
-        const orderProducts = await query.getAll();
-        if(orderProducts.length === 0) next(new NotFoundError('Data was not found'))
-        res.status(200).send({ orderProducts });
+        const data = await query.getAll();
+        if(data.length === 0) next(new NotFoundError('Data was not found'))
+        res.status(200).send({ data });
     },
 
     async getAllByOrder (req, res, next) {
@@ -18,9 +18,9 @@ export default {
         if(order.users.id !== req.token.user.id && req.token.user.roles.title !== 'admin') {
             next(new UnauthorizedError(`You don't have the permission to access`))
         }
-        const orderProducts = await query.getByOrder(req.params.id);
-        if(orderProducts.length === 0) next(new NotFoundError('Data was not found'))
-        res.status(200).send({ orderProducts });
+        const data = await query.getByOrder(req.params.id);
+        if(data.length === 0) next(new NotFoundError('Data was not found'))
+        res.status(200).send({ data });
     },
 
     async getOne (req, res, next) {
@@ -31,8 +31,8 @@ export default {
         }        
         const orderProductFound = await query.getOne(req.body)
         if(orderProductFound.length === 0) next(new NotFoundError('Data was not found'))
-        const orderProduct = orderProductFound[0];
-        res.status(200).send({ orderProduct })
+        const data = orderProductFound[0];
+        res.status(200).send({ data })
     },
 
     async updateOne(req, res, next){
@@ -40,9 +40,9 @@ export default {
         if(!order) next(new NotFoundError('Data was not found'))
         const orderProductFound = await query.getAll(req.body)
         if(orderProductFound.length === 0) next(new NotFoundError('Data was not found'))
-        const orderProduct = orderProductFound[0];
-        await query.updateOne(orderProduct, req.body);
-        res.status(201).send({ orderProduct })
+        const data = orderProductFound[0];
+        await query.updateOne(data, req.body);
+        res.status(201).send({ data })
     },
 
     async createOne(req, res, next){
@@ -51,8 +51,8 @@ export default {
         if(order.users.id !== req.token.user.id && req.token.user.roles.title !== 'admin') {
             next(new UnauthorizedError(`You don't have the permission to access`))
         }
-        const newOrderProduct = await query.createOne(req.body)
-        res.status(201).send({ newOrderProduct });
+        const data = await query.createOne(req.body)
+        res.status(201).send({ data });
     },
 
     async deleteOne(req, res, next){

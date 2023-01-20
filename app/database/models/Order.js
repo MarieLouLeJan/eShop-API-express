@@ -19,7 +19,7 @@ const Order = sequelize.define('orders',
         quantity: {
             type: DataTypes.NUMBER,
             allowNull: false,
-        },
+        }
     },
     {
         updatedAt: false,

@@ -22,20 +22,20 @@ export default {
     },
 
     async updateOnePatch(req, res, next){
-        const role = await query.getOne(req.params.id);
-        if(!role) next(new NotFoundError('Non existent data'))
-        await query.update(role, req.body);
-        res.status(201).send({ role });
+        const data = await query.getOne(req.params.id);
+        if(!data) next(new NotFoundError('Non existent data'))
+        await query.update(data, req.body);
+        res.status(201).send({ data });
     },
 
     async updateOnePut(req, res){
-        const role = await query.getOne(req.params.id);
-        if(!role) {
-            const newRole = query.createOne(req.body);
-            res.status(201).send({ newRole });
+        const data = await query.getOne(req.params.id);
+        if(!data) {
+            const data = query.createOne(req.body);
+            res.status(201).send({ data });
         } else {
-            await query.updateOne(role, req.body);
-            res.status(201).send({ role });
+            await query.updateOne(data, req.body);
+            res.status(201).send({ data });
         }
     },
 

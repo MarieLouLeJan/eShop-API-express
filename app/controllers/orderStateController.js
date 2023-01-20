@@ -5,37 +5,37 @@ import query from '../services/queries/adressQueries.js';
 export default {
 
     async getAll (req, res, next) {
-        const orderStates = await query.getAll();
-        if(orderStates.length ===0) next(new NotFoundError('Non existent data'))
-        res.status(200).send({ orderStates });
+        const data = await query.getAll();
+        if(data.length ===0) next(new NotFoundError('Non existent data'))
+        res.status(200).send({ data });
     },
 
     async getOne(req, res, next){
-        const orderState = await query.getOne(req.params.id);
-        if(!orderState) next(new NotFoundError('Non existent data'))
-        res.status(200).send({ orderState });
+        const data = await query.getOne(req.params.id);
+        if(!data) next(new NotFoundError('Non existent data'))
+        res.status(200).send({ data });
     },
 
     async createOne(req, res){
-        const newOrderState = await query.createOne(req.body);
-        res.status(201).send({ newOrderState });
+        const data = await query.createOne(req.body);
+        res.status(201).send({ data });
     },
 
     async updateOnePatch(req, res, next){
-        const orderState = await query.getOne(req.params.id);
-        if(!orderState) next(new NotFoundError('Non existent data'))
-        await query.updateOne(orderState, req.body);
-        res.status(201).send({ orderState });
+        const data = await query.getOne(req.params.id);
+        if(!data) next(new NotFoundError('Non existent data'))
+        await query.updateOne(data, req.body);
+        res.status(201).send({ data });
     },
 
     async updateOnePut(req, res){
-        const orderState = await query.getOne(req.params.id);
-        if(!orderState) {
-            const newOrderState = await query.createOne(req.body);
-            res.status(201).send({ newOrderState });
+        const data = await query.getOne(req.params.id);
+        if(!data) {
+            const data = await query.createOne(req.body);
+            res.status(201).send({ data });
         } else {
-            await query.updateOne(orderState, req.body);
-            res.status(201).send({ orderState });
+            await query.updateOne(data, req.body);
+            res.status(201).send({ data });
         }
     },
 

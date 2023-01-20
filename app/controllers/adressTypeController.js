@@ -4,44 +4,44 @@ import query from '../services/queries/adressTypeQueries.js';
 export default {
 
     async getAll (_, res, next) {
-        const adressTypes = await query.getAll();
-        if(adressTypes.length === 0) next(new NotFoundError('Non existent data'))
-        res.status(200).send({ adressTypes });
+        const data = await query.getAll();
+        if(data.length === 0) next(new NotFoundError('Non existent data'))
+        res.status(200).send({ data });
     },
 
     async getOne(req, res, next){
-        const adressType = await query.getOne(req.params.id);
-        if(!adressType) next(new NotFoundError('Non existent data'))
-        res.status(200).send({ adressType });
+        const data = await query.getOne(req.params.id);
+        if(!data) next(new NotFoundError('Non existent data'))
+        res.status(200).send({ data });
     },
 
     async createOne(req, res){
-        const newAdressType = await query.createOne(req.body)
-        res.status(201).send({ newAdressType });
+        const data = await query.createOne(req.body)
+        res.status(201).send({ data });
     },
 
     async updateOnePut(req, res){
-        const adressType = await query.getOne(req.params.id);
-        if(!adressType) {
-            const newAdressType = await query.createOne(req.body);
-            res.status(201).send({ newAdressType });
+        const data = await query.getOne(req.params.id);
+        if(!data) {
+            const data = await query.createOne(req.body);
+            res.status(201).send({ data });
         } else {
-            await query.updateOne(adressType, req.body);
-            res.status(200).send({ adressType });
+            await query.updateOne(data, req.body);
+            res.status(200).send({ data });
         }
     },
 
     async updateOnePatch(req, res, next){
-        const adressType = await query.getOne(req.params.id);
-        if(!adressType) next(new NotFoundError('Non existent data'))
-        await query.updateOne(adressType, req.body);
-        res.status(200).send({ adressType });
+        const data = await query.getOne(req.params.id);
+        if(!data) next(new NotFoundError('Non existent data'))
+        await query.updateOne(data, req.body);
+        res.status(200).send({ data });
     },
     
     async deleteOne(req, res, next){
-        const adressType = await query.getOne(req.params.id);
-        if(!adressType) next(new NotFoundError('Non existent data'))
-        await query.deleteOne(adressType);
+        const data = await query.getOne(req.params.id);
+        if(!data) next(new NotFoundError('Non existent data'))
+        await query.deleteOne(data);
         res.status(204).end();
     }
 }

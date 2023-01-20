@@ -7,55 +7,55 @@ import UnauthorizedError from '../helpers/UnauthorizedError.js';
 export default {
 
     async getAll (_, res, next) {
-        const orders = await query.getAll();
-        if(!orders) next(new NotFoundError('Non existent data'))
-        res.status(200).send({ orders });
+        const data = await query.getAll();
+        if(!data) next(new NotFoundError('Non existent data'))
+        res.status(200).send({ data });
     },
 
     async getOne(req, res, next){
         const id = req.params.id
-        const order = await query.getOne(id);
-        if(!order) next(new NotFoundError('Non existent data'))
+        const data = await query.getOne(id);
+        if(!data) next(new NotFoundError('Non existent data'))
         const products = await OPQuery.getByOrder(id);
         const adresses = await OTAQuery.getByOrder(id)
-        res.status(200).json({ order, products, adresses })
+        res.status(200).json({ data, products, adresses })
     },
 
     async getByUSer(req, res, next){
-        const orders = await query.getByUser();
-        if(orders.length === 0) next(new NotFoundError('Non existent data'))
-        res.status(200).json({ orders })
+        const data = await query.getByUser();
+        if(data.length === 0) next(new NotFoundError('Non existent data'))
+        res.status(200).json({ data })
     },
 
     async createOne(req, res, next){
         if(req.body.user_id !== req.token.user.id && req.token.user.roles.title !== 'admin') {
             next(new UnauthorizedError(`You don't have the permission to access`))
         }
-        const newOrder = await query.createOne(req.body)
-        res.status(201).send({ newOrder });
+        const data = await query.createOne(req.body.cart);
+        res.status(201).send({ data });
     },
 
     async updateOnePatch(req, res, next){
-        const order = await query.getOne(req.params.id);
-        if(!order) next(new NotFoundError('Non existent data'));
-        if(order.users.id !== req.token.user.id && req.token.user.roles.title !== 'admin') {
+        const data = await query.getOne(req.params.id);
+        if(!data) next(new NotFoundError('Non existent data'));
+        if(data.users.id !== req.token.user.id && req.token.user.roles.title !== 'admin') {
             next(new UnauthorizedError(`You don't have the permission to access`))
         }
-        await query.updateOne(order, req.body);
-        res.status(201).send({ order });
+        await query.updateOne(data, req.body);
+        res.status(201).send({ data });
     },
 
     async updateOnePut(req, res, next){
         if(req.body.user_id !== req.token.user.id && req.token.user.roles.title !== 'admin') {
             next(new UnauthorizedError(`You don't have the permission to access`))
         }
-        const order = await query.getOne(req.params.id);
-        if(!order) {
-            const newOrder = await query.createOne(req.body);
-            res.status(201).send({ newOrder });
+        const data = await query.getOne(req.params.id);
+        if(!data) {
+            const data = await query.createOne(req.body);
+            res.status(201).send({ data });
         } else {
-            await query.updateOne(order, req.body);
-            res.status(201).send({ order });
+            await query.updateOne(data, req.body);
+            res.status(201).send({ data });
         }
     },
 

@@ -6,9 +6,9 @@ import UnauthorizedError from '../helpers/UnauthorizedError.js';
 export default {
 
     async getAll (req, res, next) {
-        const orderTypeAdresses = await query.getAll();
-        if(orderTypeAdresses.length === 0) next(new NotFoundError('Non existent data'))
-        res.status(200).send({ orderTypeAdresses });
+        const data = await query.getAll();
+        if(data.length === 0) next(new NotFoundError('Non existent data'))
+        res.status(200).send({ data });
     },
 
     async getByOrder (req, res, next) {
@@ -17,9 +17,9 @@ export default {
         if(order.users.id !== req.token.user.id && req.token.user.roles.title !== 'admin') {
             next(new UnauthorizedError(`You don't have the permission to access`))
         }
-        const orderTypeAdresses = await query.getByOrder(req.params.id);
-        if(orderTypeAdresses.length === 0) next(new NotFoundError('Non existent data'));
-        res.status(200).send(orderTypeAdresses)
+        const data = await query.getByOrder(req.params.id);
+        if(data.length === 0) next(new NotFoundError('Non existent data'));
+        res.status(200).send(data)
     },
 
     async createOne(req, res, next){
@@ -28,8 +28,8 @@ export default {
         if(order.users.id !== req.token.user.id && req.token.user.roles.title !== 'admin') {
             next(new UnauthorizedError(`You don't have the permission to access`))
         }
-        const newOrderTypeAdress = await query.createOne(req.body)
-        res.status(201).send({ newOrderTypeAdress });
+        const data = await query.createOne(req.body)
+        res.status(201).send({ data });
     },
 
     async deleteOne(req, res, next){

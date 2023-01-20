@@ -42,7 +42,6 @@ const Adress = sequelize.define('adresses',
         complement: {
             type: DataTypes.STRING,
             allowNull: true,
-
         },
         active: {
             type: DataTypes.BOOLEAN,

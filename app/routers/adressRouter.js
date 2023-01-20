@@ -22,7 +22,7 @@ adressRouter.get('/getOne/:id', param, auth, CW(controller.getOne));
 
 adressRouter.get('/getByUser/:id', param, auth, authUser, CW(controller.getByUser))
 
-adressRouter.post('/createOne', auth, validate(adressComp, 'body'), CW(controller.createOne));
+adressRouter.post('/createOne', auth, validate(adressPart, 'body'), CW(controller.createOne));
 
 adressRouter.put('/updateOnePut/:id', param, bodyMaker, auth, validate(adressComp, 'body'), CW(controller.updateOnePut));
 

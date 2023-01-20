@@ -5,12 +5,12 @@ const frenchPattern = /^[a-zA-Z0-9Ã-ÿ .,'"°-]+$/;
 const adressSchema = {
     entitled: Joi.string().pattern(frenchPattern).min(2),
     number: Joi.number().greater(0),
-    number_complement: Joi.string().pattern(frenchPattern),
+    number_complement: Joi.string().allow(''),
     street: Joi.string().pattern(frenchPattern).min(2),
     postal_code: Joi.number().greater(1000).less(99999),
     city: Joi.string().pattern(frenchPattern).min(2),
     country: Joi.string().pattern(frenchPattern).min(2),
-    complement: Joi.string().pattern(frenchPattern),
+    complement: Joi.string().allow(''),
     active: Joi.boolean(),
     user_id: Joi.number().greater(0)
 }
