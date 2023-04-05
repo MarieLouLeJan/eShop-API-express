@@ -1,11 +1,14 @@
-export const GOOGLE_CLIENT_ID = '563664428847-bvae1h3ccoke4a4qp32kb0il3i8228ch.apps.googleusercontent.com'
+export const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 
-export const GOOGLE_CLIENT_SECRET = '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'
+export const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
 
-export const SERVER_ROOT_URI = `http://localhost:${process.env.PORT}`
-export const UI_ROOT_URI = 'http://localhost:3000';
-export const JWT_SECRET = 'shhhhh';
-export const COOKIE_NAME = 'auth_token';
+export const SERVER_ROOT_URI = `http://localhost:${process.env.PORT}`;
+
+export const UI_ROOT_URI = process.env.CLIENT_URL;
+
+export const JWT_SECRET = process.env.JTW_SECRET;
+
+export const COOKIE_NAME = process.env.COOKIE_NAME;
 
 
 // Getting login URL
