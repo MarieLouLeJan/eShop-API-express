@@ -1,6 +1,6 @@
 logs
 *.log
-sqitch.conf
+.conf
 node_modules/
 jspm_packages/
 .eslintcache
