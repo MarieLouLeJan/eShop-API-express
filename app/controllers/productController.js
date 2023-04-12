@@ -42,6 +42,7 @@ export default {
 
     async updateOnePut(req, res){
         const data = await query.getOneAdmin(req.params.id);
+        console.log(req.body)
         if(!data) {
             const data = await query.createOne(req.body);
             res.status(201).send({ data });

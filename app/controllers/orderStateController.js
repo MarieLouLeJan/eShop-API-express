@@ -1,12 +1,13 @@
 import NotFoundError from '../helpers/NotFoundError.js';
-import query from '../services/queries/adressQueries.js';
-
+import query from '../services/queries/orderStateQueries.js';
 
 export default {
 
     async getAll (req, res, next) {
         const data = await query.getAll();
-        if(data.length ===0) next(new NotFoundError('Non existent data'))
+        console.log('here')
+        console.log(data)
+        if(data.length === 0) next(new NotFoundError('Non existent data'))
         res.status(200).send({ data });
     },
 

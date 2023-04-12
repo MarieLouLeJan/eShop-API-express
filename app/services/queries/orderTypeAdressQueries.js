@@ -12,7 +12,7 @@ export default {
     async getByOrder (id) {
         return await Order_type_adress.findAll({
             where: { order_id: id },
-            include: [ 'adress', 'adress_type' ]
+            include: [ 'adress', 'adress_types' ]
         });
     },
 

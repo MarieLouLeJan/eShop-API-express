@@ -16,7 +16,8 @@ export default {
 
     async getByUser (id) {
         return await Order.findAll({
-            where: { user_id: id }
+            where: { user_id: id },
+            include: [ 'order_states']
         });
     },
 
