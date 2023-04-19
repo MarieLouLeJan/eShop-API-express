@@ -40,12 +40,12 @@
  *            $ref: '#/components/schemas/Roles'
  *         adresses:
  *           type: array
- *           items: 
- *             $ref: '#/components/schemas/Adresses'   
+ *           items:
+ *             $ref: '#/components/schemas/Adresses'
  *         active:
  *           type: boolean
  *         created_at:
- *           type: string 
+ *           type: string
  */
 
 /**
@@ -57,16 +57,15 @@
  *      responses:
  *          200:
  *              description: The list of the users
- *              content: 
+ *              content:
  *                  application/json:
  *                      schema:
  *                          type: array
- *                          items:  
+ *                          items:
  *                              $ref: '#/components/schemas/GetUsers'
  *          500:
  *              description: Some servor error
  */
-
 
 /**
  * @swagger
@@ -84,7 +83,7 @@
  *      responses:
  *          200:
  *              description: The user description
- *              content: 
+ *              content:
  *                  application/json:
  *                      schema:
  *                          $ref: '#/components/schemas/GetUsers'
@@ -115,15 +114,15 @@
  *                        email:
  *                          type: string
  *                        password:
- *                          type: string   
+ *                          type: string
  *      responses:
  *          200:
  *              description: The list of the users
- *              content: 
+ *              content:
  *                  application/json:
  *                      schema:
  *                          type: array
- *                          items:  
+ *                          items:
  *                              $ref: '#/components/schemas/GetUsers'
  *          500:
  *              description: Some servor error
@@ -131,7 +130,7 @@
 
 /**
  * @swagger
- * /users/createOne:   
+ * /users/register:
  *  post:
  *      summary: Create a new user
  *      tags: [Users]
@@ -177,13 +176,13 @@
  *              content:
  *                  application/json:
  *                      schema:
- *                          $ref: '#/components/schemas/Users'  
+ *                          $ref: '#/components/schemas/Users'
  *          201:
  *              description: A new user was created
  *              content:
  *                  application/json:
  *                      schema:
- *                          $ref: '#/components/schemas/Users'        
+ *                          $ref: '#/components/schemas/Users'
  *          404:
  *              description: The data was not found
  *          500:
@@ -215,7 +214,7 @@
  *              content:
  *                  application/json:
  *                      schema:
- *                          $ref: '#/components/schemas/Users'     
+ *                          $ref: '#/components/schemas/Users'
  *          404:
  *              description: The data was not found
  *          500:
@@ -237,11 +236,9 @@
  *          description: The user's id
  *      responses:
  *          204:
- *              description: The data was deleted      
+ *              description: The data was deleted
  *          404:
  *              description: The data was not found
  *          500:
  *              description: Some servor error
  */
-
-

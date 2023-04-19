@@ -1,8 +1,7 @@
-import UnauthorizedError from '../../helpers/UnauthorizedError.js'
+import UnauthorizedError from '../../helpers/UnauthorizedError.js';
 
 export default (req, res, next) => {
-
-    if(req.token.user.roles.title !== 'admin') next(new UnauthorizedError(`You don't have the permission to access`));
-    next();
-
-}
+  req.token.user.roles.title !== 'admin' &&
+    next(new UnauthorizedError("You don't have the permission to access"));
+  next();
+};

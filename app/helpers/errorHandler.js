@@ -11,7 +11,6 @@ export default (err, _, res, next) => {
 
 
     if (status === 500) {
-        console.log('ici')
         message = 'Internal Server Error, please retry again later…';
         logger.error(err);
     }

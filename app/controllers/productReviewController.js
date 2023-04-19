@@ -1,32 +1,30 @@
-import NotFoundError from "../helpers/NotFoundError.js";
-import query from "../services/queries/productReviewQueries.js";
-import UnauthorizedError from "../helpers/UnauthorizedError.js";
+import NotFoundError from '../helpers/NotFoundError.js';
+import query from '../services/queries/productReviewQueries.js';
+import UnauthorizedError from '../helpers/UnauthorizedError.js';
 
 export default {
   async getAll(req, res, next) {
     const data = await query.getAll();
-    if (data.length === 0) next(new NotFoundError("Non existent data"));
+    data.length === 0 && next(new NotFoundError('Non existent data'));
     res.status(200).send({ data });
   },
 
   async getAllByProduct(req, res, next) {
     const data = await query.getAllByProduct(req.params.id);
-    if (data.length === 0) next(new NotFoundError("Non existent data"));
+    data.length === 0 && next(new NotFoundError('Non existent data'));
     res.status(200).send({ data });
   },
 
   async getOne(req, res, next) {
     const productReviews = await query.getOne(req.body);
-    if (productReviews.length === 0)
-      next(new NotFoundError("Non existent data"));
+    productReviews.length === 0 && next(new NotFoundError('Non existent data'));
     const data = productReviews[0];
     res.status(200).send({ data });
   },
 
   async updateOne(req, res, next) {
     const productReviews = await query.getOne(req.body);
-    if (productReviews.length === 0)
-      next(new NotFoundError("Non existent data"));
+    productReviews.length === 0 && next(new NotFoundError('Non existent data'));
     const data = productReviews[0];
     await query.update(data, req.body);
     res.status(201).send({ data });
@@ -35,21 +33,18 @@ export default {
   async createOne(req, res, next) {
     if (
       req.body.user_id !== req.token.user.id &&
-      req.token.user.roles.title !== "admin"
-    ) {
-      next(new UnauthorizedError(`You don't have the permission to access`));
-    }
+      req.token.user.roles.title !== 'admin'
+    )
+      next(new UnauthorizedError("You don't have the permission to access"));
     const data = await query.createOne(req.body);
     res.status(201).send({ data });
   },
 
   async deleteOne(req, res, next) {
     const productReviewToDelete = await query.getOne(req.body);
-    if (productReviewToDelete.length === 0)
-      next(new NotFoundError("Non existent data"));
-    for (const i of productReviewToDelete) {
-      await query.deleteOne(i);
-    }
+    productReviewToDelete.length === 0 &&
+      next(new NotFoundError('Non existent data'));
+    productReviewToDelete.forEach(async (i) => await query.deleteOne(i));
     res.status(204).end();
   },
 };

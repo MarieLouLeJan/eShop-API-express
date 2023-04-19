@@ -53,3 +53,4 @@ has adress type, ON ADRESS_TYPES, 0N ADRESSES
 ADRESS_TYPES: title, active, created_at
 :
 :
+has orders, ON ORDERS, ON ADRESS_TYPES
